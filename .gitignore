@@ -74,4 +74,5 @@ credentials/
 DEPLOYMENT.md
 docker-compose*.yml
 .dockerignore
-
+render.yaml
+fly.toml

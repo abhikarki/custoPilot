@@ -7,5 +7,6 @@ Post-production, companies can use the **support console** to monitor conversati
 
 
 ### System Architecture
-<img width="3807" height="1661" alt="custoPilot-architecture" src="https://github.com/user-attachments/assets/a5d10116-1deb-49a8-8b65-b963ee0ad2c8" />
+<img width="3807" height="2105" alt="custoPilot-architecture" src="https://github.com/user-attachments/assets/2d8d4284-6b92-4eda-9a94-eeebd72ba17b" />
+
 

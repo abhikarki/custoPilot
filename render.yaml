@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: custopilot
+    env: docker
+    dockerfilePath: ./Dockerfile.prod
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: BASE_URL
+        sync: false
+      - key: LANGCHAIN_TRACING_V2
+        value: "false"
+      - key: LANGCHAIN_API_KEY
+        sync: false
+      - key: LANGCHAIN_PROJECT
+        value: "custopilot"
+    disk:
+      name: custopilot-data
+      mountPath: /app/data
+      sizeGB: 1
+    healthCheckPath: /health

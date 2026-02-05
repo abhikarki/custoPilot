@@ -1,0 +1,77 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+.env
+.env.local
+.env.*.local
+.env.production
+*.env
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+!.env.example
+
+*.db
+*.sqlite
+*.sqlite3
+
+*.log
+logs/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*.code-workspace
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+
+# Data directories (contains user uploads and vector DB)
+backend/data/
+data/
+frontend/dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Docker
+.docker/
+
+# Secrets / Keys - NEVER COMMIT!
+*.pem
+*.key
+*.crt
+id_rsa*
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# Temp files
+*.tmp
+*.temp
+*.bak
+~*
+
+DEPLOYMENT.md
+docker-compose*.yml
+.dockerignore
+

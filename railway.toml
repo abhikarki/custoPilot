@@ -1,0 +1,18 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "Dockerfile.prod"
+
+[deploy]
+startCommand = "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+healthcheckPath = "/health"
+healthcheckTimeout = 100
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
+
+# Environment variables to set in Railway dashboard:
+# - DATABASE_URL (from Railway PostgreSQL plugin or Neon)
+# - OPENAI_API_KEY
+# - SECRET_KEY (generate with: openssl rand -hex 32)
+# - BASE_URL (your Railway app URL)
+# - LANGCHAIN_API_KEY (optional)
+# - LANGCHAIN_TRACING_V2=true (optional)

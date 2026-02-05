@@ -1,0 +1,35 @@
+from app.db.session import Base, get_db, init_db, engine, async_session_maker
+from app.db.models import (
+    User, UserRole,
+    Organization,
+    Department,
+    Chatbot,
+    KnowledgeDocument, KnowledgeChunk, KnowledgeType, ProcessingStatus,
+    AgentPipeline, AgentRun,
+    Conversation, ConversationStatus, Message,
+    Escalation, EscalationStatus,
+)
+
+__all__ = [
+    "Base",
+    "get_db",
+    "init_db",
+    "engine",
+    "async_session_maker",
+    "User",
+    "UserRole",
+    "Organization",
+    "Department",
+    "Chatbot",
+    "KnowledgeDocument",
+    "KnowledgeChunk",
+    "KnowledgeType",
+    "ProcessingStatus",
+    "AgentPipeline",
+    "AgentRun",
+    "Conversation",
+    "ConversationStatus",
+    "Message",
+    "Escalation",
+    "EscalationStatus",
+]

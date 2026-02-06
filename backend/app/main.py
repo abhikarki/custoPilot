@@ -26,11 +26,19 @@ structlog.configure(
 
 logger = structlog.get_logger()
 
+DB_STATUS = {"initialized": False, "error": None}
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Starting CustoPilot API", version="1.0.0")
-    await init_db()
+    logger.info("Config", db_url=settings.DATABASE_URL[:30] + "...", openai_set=bool(settings.OPENAI_API_KEY))
+    try:
+        await init_db()
+        DB_STATUS["initialized"] = True
+        logger.info("Database initialized successfully")
+    except Exception as e:
+        DB_STATUS["error"] = str(e)
+        logger.error("Database initialization failed - app will start but DB features won't work", error=str(e))
     yield
     logger.info("Shutting down CustoPilot API")
 
@@ -77,9 +85,9 @@ async def root():
 async def health_check():
     return {
         "status": "healthy",
-        "database": "connected",
-        "vector_store": "connected",
-        "agents": "ready"
+        "database": "connected" if DB_STATUS["initialized"] else f"error: {DB_STATUS['error']}",
+        "openai_key_set": bool(settings.OPENAI_API_KEY),
+        "version": "1.0.0"
     }
 
 

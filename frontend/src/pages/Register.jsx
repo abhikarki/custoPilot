@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../stores/authStore'
-import { MessageCircle, Loader2 } from 'lucide-react'
+import { MessageCircle, Loader2, Lock } from 'lucide-react'
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -18,12 +18,7 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    clearError()
-    
-    const result = await register(formData)
-    if (result.success) {
-      navigate('/')
-    }
+    // Registration disabled
   }
 
   return (
@@ -38,15 +33,28 @@ export default function Register() {
           <p className="text-gray-500 mt-1">AI-Powered Customer Support</p>
         </div>
 
-        {/* Register Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">Create your account</h2>
-
-          {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-              {error}
+        {/* Invite Only Notice */}
+        <div className="mb-4 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+          <div className="flex items-start gap-3">
+            <Lock className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="font-medium text-amber-900">Invite Only</p>
+              <p className="text-sm text-amber-700 mt-1">
+                Sign ups are currently by invitation only. Please use the demo account to explore the platform.
+              </p>
+              <Link
+                to="/login"
+                className="inline-block mt-2 text-sm text-amber-700 hover:text-amber-900 font-medium underline"
+              >
+                Go to Login
+              </Link>
             </div>
-          )}
+          </div>
+        </div>
+
+        {/* Register Form */}
+        <div className="bg-white rounded-2xl shadow-xl p-8 opacity-60">
+          <h2 className="text-xl font-semibold text-gray-900 mb-6">Create your account</h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -58,8 +66,8 @@ export default function Register() {
                 name="full_name"
                 value={formData.full_name}
                 onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                disabled
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
                 placeholder="John Doe"
               />
             </div>
@@ -73,8 +81,8 @@ export default function Register() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                disabled
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
                 placeholder="you@example.com"
               />
             </div>
@@ -88,20 +96,18 @@ export default function Register() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                required
-                minLength={8}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                disabled
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
                 placeholder="••••••••"
               />
             </div>
 
             <button
               type="submit"
-              disabled={isLoading}
-              className="w-full py-2 px-4 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              disabled
+              className="w-full py-2 px-4 bg-gray-400 text-white rounded-lg font-medium cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
-              Create account
+              Registration Disabled
             </button>
           </form>
 

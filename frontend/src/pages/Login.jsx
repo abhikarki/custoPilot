@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../stores/authStore'
-import { MessageCircle, Loader2 } from 'lucide-react'
+import { MessageCircle, Loader2, Info } from 'lucide-react'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -19,6 +19,11 @@ export default function Login() {
     }
   }
 
+  const fillDemoCredentials = () => {
+    setEmail('admin@custopilot.com')
+    setPassword('admin123')
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-blue-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -29,6 +34,26 @@ export default function Login() {
           </div>
           <h1 className="text-2xl font-bold text-gray-900">CustoPilot</h1>
           <p className="text-gray-500 mt-1">AI-Powered Customer Support</p>
+        </div>
+
+        {/* Demo Account Card */}
+        <div className="mb-4 p-4 bg-primary-50 border border-primary-200 rounded-xl">
+          <div className="flex items-start gap-3">
+            <Info className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="font-medium text-primary-900">Try the Demo</p>
+              <p className="text-sm text-primary-700 mt-1">
+                Sign in with: <span className="font-mono">admin@custopilot.com</span> / <span className="font-mono">admin123</span>
+              </p>
+              <button
+                type="button"
+                onClick={fillDemoCredentials}
+                className="mt-2 text-sm text-primary-600 hover:text-primary-800 font-medium underline"
+              >
+                Click to autofill
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Login Form */}
@@ -86,13 +111,6 @@ export default function Login() {
               Sign up
             </Link>
           </div>
-        </div>
-
-        {/* Demo Credentials */}
-        <div className="mt-6 p-4 bg-white/50 rounded-xl text-sm text-gray-600">
-          <p className="font-medium text-gray-700 mb-2">Demo Credentials:</p>
-          <p>Admin: admin@custopilot.com / admin123</p>
-          <p>Support: support@custopilot.com / support123</p>
         </div>
       </div>
     </div>

@@ -1,4 +1,9 @@
 import os
+import sys
+print(f"Starting CustoPilot - Python {sys.version}", flush=True)
+print(f"PORT={os.environ.get('PORT', 'not set')}", flush=True)
+print(f"DATABASE_URL set={bool(os.environ.get('DATABASE_URL'))}", flush=True)
+
 from pathlib import Path
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
@@ -7,9 +12,14 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import structlog
 
+print("Basic imports done", flush=True)
+
 from app.core.config import settings
+print(f"Settings loaded, DB_URL={settings.DATABASE_URL[:30]}...", flush=True)
+
 from app.api import auth, organizations, knowledge, chat, support, agents, voice, chatbots
 from app.db.session import init_db
+print("All imports done", flush=True)
 
 structlog.configure(
     processors=[

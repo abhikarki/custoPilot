@@ -1,7 +1,7 @@
 from typing import Optional
 from uuid import UUID
 import uuid
-from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from pydantic import BaseModel
@@ -9,6 +9,7 @@ from pydantic import BaseModel
 from app.db import get_db, Conversation, Message, Organization, Chatbot, ConversationStatus
 from app.schemas import ChatMessage, ChatResponse, ConversationResponse, MessageResponse
 from app.core.security import get_current_user
+from app.core.rate_limiter import chat_rate_limit
 from app.services.chat_service import ChatService
 
 router = APIRouter()
@@ -23,7 +24,9 @@ class WidgetMessage(BaseModel):
 @router.post("/widget-message")
 async def widget_send_message(
     message: WidgetMessage,
-    db: AsyncSession = Depends(get_db)
+    request: Request,
+    db: AsyncSession = Depends(get_db),
+    _rate_limit: None = Depends(chat_rate_limit)
 ):
     result = await db.execute(
         select(Chatbot).where(Chatbot.id == message.chatbot_id, Chatbot.is_active == True)

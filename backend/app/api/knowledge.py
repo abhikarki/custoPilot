@@ -2,7 +2,7 @@ from typing import List, Optional
 from uuid import UUID
 import os
 import aiofiles
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, BackgroundTasks
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, BackgroundTasks, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
@@ -10,21 +10,35 @@ from app.db import get_db, KnowledgeDocument, KnowledgeChunk, Organization, Depa
 from app.schemas import KnowledgeUploadResponse, KnowledgeDocumentResponse, KnowledgeChunkResponse, KnowledgeType
 from app.core.security import get_current_user, require_admin
 from app.core.config import settings
+from app.core.rate_limiter import upload_rate_limit
 from app.services.knowledge_service import KnowledgeService
 
 router = APIRouter(redirect_slashes=False)
+
+# Max file size: 5MB for demo
+MAX_FILE_SIZE = 5 * 1024 * 1024
 
 
 @router.post("/upload", response_model=KnowledgeUploadResponse)
 async def upload_knowledge(
     background_tasks: BackgroundTasks,
+    request: Request,
     file: UploadFile = File(...),
     organization_id: UUID = Form(...),
     department_id: Optional[UUID] = Form(None),
     title: Optional[str] = Form(None),
     current_user: dict = Depends(require_admin),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    _rate_limit: None = Depends(upload_rate_limit)
 ):
+    # Check file size
+    content = await file.read()
+    if len(content) > MAX_FILE_SIZE:
+        raise HTTPException(
+            status_code=413,
+            detail=f"File too large. Maximum size is {MAX_FILE_SIZE // (1024*1024)}MB"
+        )
+    
     result = await db.execute(select(Organization).where(Organization.id == organization_id))
     if not result.scalar_one_or_none():
         raise HTTPException(status_code=404, detail="Organization not found")
@@ -57,8 +71,8 @@ async def upload_knowledge(
     file_ext = allowed_types[content_type]
     file_path = os.path.join(upload_dir, f"{file_id}.{file_ext}")
     
+    # content already read above for size check
     async with aiofiles.open(file_path, 'wb') as f:
-        content = await file.read()
         await f.write(content)
     
     doc = KnowledgeDocument(

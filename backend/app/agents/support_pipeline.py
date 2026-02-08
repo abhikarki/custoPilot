@@ -17,6 +17,7 @@ class SupportState(TypedDict):
     conversation_history: List[Dict[str, str]]
     organization_id: str
     department: Optional[str]
+    document_ids: Optional[List[str]]
     
     intent: str
     entities: Dict[str, Any]
@@ -164,19 +165,29 @@ class SupportAgentPipeline:
                 entity_text = " ".join(str(v) for v in state["entities"].values())
                 query = f"{query} {entity_text}"
             
+            # Build filter - use document_ids if available, otherwise organization_id
+            if state.get("document_ids"):
+                search_filter = {"document_id": {"$in": state["document_ids"]}}
+            else:
+                search_filter = {"organization_id": state["organization_id"]}
+            
+            logger.info("Retriever filter", filter=search_filter)
+            
             results = await self.vector_store.similarity_search(
                 query=query,
                 k=5,
-                filter={"organization_id": state["organization_id"]}
+                filter=search_filter
             )
             
             knowledge_context = []
             for doc, score in results:
-                if score > 0.5: 
+                # Note: Chroma returns distance (lower is better), not similarity
+                # Include results with distance < 1.5 (adjust threshold as needed)
+                if score < 1.5: 
                     knowledge_context.append({
                         "content": doc.page_content,
                         "metadata": doc.metadata,
-                        "relevance_score": score,
+                        "relevance_score": 1 - (score / 2),  # Convert distance to similarity-like score
                     })
             
             state["knowledge_context"] = knowledge_context
@@ -387,6 +398,7 @@ Generate a helpful response (be direct, no formal sign-offs):""")
         organization_id: str,
         department: Optional[str] = None,
         department_ids: Optional[List[str]] = None,
+        document_ids: Optional[List[str]] = None,
         chatbot_config: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
        
@@ -395,6 +407,7 @@ Generate a helpful response (be direct, no formal sign-offs):""")
             "conversation_history": conversation_history,
             "organization_id": organization_id,
             "department": department,
+            "document_ids": document_ids,
             "intent": "",
             "entities": {},
             "routed_department": "",

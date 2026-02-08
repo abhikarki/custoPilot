@@ -59,6 +59,11 @@ class ChatService:
             if chatbot and chatbot.departments:
                 department_ids = [str(d.id) for d in chatbot.departments]
             
+            # Get document_ids from chatbot
+            document_ids = None
+            if chatbot and chatbot.document_ids:
+                document_ids = chatbot.document_ids
+            
             # Run support pipeline
             pipeline = SupportAgentPipeline()
             result = await pipeline.run(
@@ -67,6 +72,7 @@ class ChatService:
                 organization_id=organization_id,
                 department=conversation.department,
                 department_ids=department_ids,
+                document_ids=document_ids,
                 chatbot_config={
                     "temperature": chatbot.temperature if chatbot else 0.7,
                     "system_prompt": chatbot.system_prompt if chatbot else None,

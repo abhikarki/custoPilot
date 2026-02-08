@@ -261,7 +261,7 @@
 
     // Fetch chatbot config
     try {
-      const response = await fetch(`${apiBaseUrl}/chatbots/${chatbotId}/public-config`);
+      const response = await fetch(`${apiBaseUrl}/api/chatbots/${chatbotId}/public-config`);
       if (!response.ok) throw new Error('Failed to load chatbot config');
       chatbotConfig = await response.json();
     } catch (error) {
@@ -412,7 +412,7 @@
     showTypingIndicator();
     
     try {
-      const response = await fetch(`${apiBaseUrl}/chat/widget-message`, {
+      const response = await fetch(`${apiBaseUrl}/api/chat/widget-message`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

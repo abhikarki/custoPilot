@@ -1,6 +1,6 @@
 from typing import List, Optional
 from uuid import UUID
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
@@ -265,17 +265,19 @@ async def get_public_config(
 @router.get("/{chatbot_id}/embed-code")
 async def get_embed_code(
     chatbot_id: UUID,
+    request: Request,
     db: AsyncSession = Depends(get_db)
 ):
-    from app.core.config import settings
-    
     result = await db.execute(select(Chatbot).where(Chatbot.id == chatbot_id))
     chatbot = result.scalar_one_or_none()
     
     if not chatbot:
         raise HTTPException(status_code=404, detail="Chatbot not found")
     
-    base_url = getattr(settings, 'BASE_URL', 'http://localhost:8080')
+    # Auto-detect base URL from request
+    forwarded_proto = request.headers.get("x-forwarded-proto", "http")
+    forwarded_host = request.headers.get("x-forwarded-host") or request.headers.get("host", "localhost:8080")
+    base_url = f"{forwarded_proto}://{forwarded_host}"
     
     embed_code = f'''<!-- CustoPilot Chatbot Widget -->
 <script>

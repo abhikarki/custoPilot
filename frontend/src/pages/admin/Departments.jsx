@@ -72,8 +72,8 @@ export default function Departments() {
 
   if (!organizationId) {
     return (
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 text-center">
-        <p className="text-amber-700">No organization found. Please log out and register again.</p>
+      <div className="bg-amber-50 border border-amber-200 rounded-apple p-6 text-center">
+        <p className="text-[14px] text-amber-700">No organization found. Please log out and register again.</p>
       </div>
     )
   }
@@ -83,12 +83,12 @@ export default function Departments() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Departments</h1>
-          <p className="text-gray-500 mt-1">Organize your knowledge by department</p>
+          <h1 className="text-[28px] font-semibold text-primary-600">Departments</h1>
+          <p className="text-[14px] text-primary-400 mt-1">Organize your knowledge by department</p>
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+          className="flex items-center gap-2 px-4 py-2.5 bg-accent-500 text-white text-[14px] font-medium rounded-apple hover:bg-accent-600 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Add Department
@@ -97,24 +97,24 @@ export default function Departments() {
 
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-primary-400" />
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search departments..."
-          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          className="w-full pl-11 pr-4 py-2.5 bg-primary-50 border border-primary-200 rounded-apple text-[14px] text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/30 focus:border-accent-500 transition-colors"
         />
       </div>
 
       {/* Create Department Modal */}
       {showCreate && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 w-full max-w-md">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Create Department</h2>
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white rounded-apple-lg p-6 w-full max-w-md shadow-modal">
+            <h2 className="text-[17px] font-semibold text-primary-600 mb-5">Create Department</h2>
             <form onSubmit={handleCreate} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[13px] font-medium text-primary-500 mb-1.5">
                   Department Name
                 </label>
                 <input
@@ -122,12 +122,12 @@ export default function Departments() {
                   value={newDeptName}
                   onChange={(e) => setNewDeptName(e.target.value)}
                   placeholder="e.g., Sales, Support, Billing"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                  className="w-full px-3.5 py-2.5 bg-primary-50 border border-primary-200 rounded-apple text-[14px] text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/30 focus:border-accent-500 transition-colors"
                   autoFocus
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[13px] font-medium text-primary-500 mb-1.5">
                   Description (optional)
                 </label>
                 <textarea
@@ -135,21 +135,21 @@ export default function Departments() {
                   onChange={(e) => setNewDeptDesc(e.target.value)}
                   placeholder="What kind of knowledge will this department contain?"
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                  className="w-full px-3.5 py-2.5 bg-primary-50 border border-primary-200 rounded-apple text-[14px] text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/30 focus:border-accent-500 transition-colors"
                 />
               </div>
-              <div className="flex justify-end gap-3">
+              <div className="flex justify-end gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => setShowCreate(false)}
-                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
+                  className="px-4 py-2.5 text-[14px] font-medium text-primary-600 bg-primary-100 rounded-apple hover:bg-primary-200 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={!newDeptName.trim() || createMutation.isPending}
-                  className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50"
+                  className="flex items-center gap-2 px-4 py-2.5 text-[14px] font-medium bg-accent-500 text-white rounded-apple hover:bg-accent-600 disabled:opacity-50 transition-colors"
                 >
                   {createMutation.isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                   Create
@@ -163,40 +163,40 @@ export default function Departments() {
       {/* Departments Grid */}
       {isLoading ? (
         <div className="flex items-center justify-center h-64">
-          <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-accent-500" />
         </div>
       ) : filteredDepts.length === 0 ? (
-        <div className="bg-white rounded-xl p-12 text-center border border-gray-200">
-          <FolderOpen className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No departments yet</h3>
-          <p className="text-gray-500 mb-4">
+        <div className="bg-white rounded-apple-lg p-12 text-center border border-primary-200 shadow-card">
+          <FolderOpen className="w-12 h-12 text-primary-300 mx-auto mb-4" />
+          <h3 className="text-[17px] font-semibold text-primary-600 mb-2">No departments yet</h3>
+          <p className="text-[14px] text-primary-400 mb-5">
             Create departments to organize your knowledge base by topic or team
           </p>
           <button
             onClick={() => setShowCreate(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent-500 text-white text-[14px] font-medium rounded-apple hover:bg-accent-600 transition-colors"
           >
             <Plus className="w-4 h-4" />
             Create First Department
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredDepts.map((dept) => {
             const docCount = getDocCountForDept(dept.id)
             return (
               <div
                 key={dept.id}
-                className="bg-white rounded-xl p-5 border border-gray-200 hover:border-primary-300 hover:shadow-md transition-all group"
+                className="bg-white rounded-apple-lg p-5 border border-primary-200 hover:border-accent-500/30 shadow-card hover:shadow-elevated transition-all group"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-primary-50 rounded-lg group-hover:bg-primary-100 transition-colors">
-                      <Folder className="w-6 h-6 text-primary-600" />
+                    <div className="p-2.5 bg-accent-500/10 rounded-apple group-hover:bg-accent-500/15 transition-colors">
+                      <Folder className="w-6 h-6 text-accent-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">{dept.name}</h3>
-                      <p className="text-sm text-gray-500">{dept.slug}</p>
+                      <h3 className="text-[15px] font-semibold text-primary-600">{dept.name}</h3>
+                      <p className="text-[13px] text-primary-400">{dept.slug}</p>
                     </div>
                   </div>
                   <button
@@ -206,20 +206,20 @@ export default function Departments() {
                       }
                     }}
                     disabled={deleteMutation.isPending}
-                    className="p-1 text-gray-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition-all"
+                    className="p-1.5 text-primary-400 hover:text-red-600 hover:bg-red-50 rounded-lg opacity-0 group-hover:opacity-100 transition-all"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
 
                 {dept.description && (
-                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                  <p className="text-[13px] text-primary-500 mb-3 line-clamp-2">
                     {dept.description}
                   </p>
                 )}
 
-                <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                <div className="flex items-center justify-between pt-3 border-t border-primary-100">
+                  <div className="flex items-center gap-2 text-[13px] text-primary-500">
                     <FileText className="w-4 h-4" />
                     <span>{docCount} document{docCount !== 1 ? 's' : ''}</span>
                   </div>
@@ -231,9 +231,9 @@ export default function Departments() {
       )}
 
       {/* Info Box */}
-      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-        <h3 className="font-medium text-blue-900 mb-2">💡 How departments work</h3>
-        <ul className="text-sm text-blue-800 space-y-1">
+      <div className="bg-accent-500/5 border border-accent-500/20 rounded-apple p-4">
+        <h3 className="text-[14px] font-medium text-accent-600 mb-2">💡 How departments work</h3>
+        <ul className="text-[13px] text-primary-500 space-y-1">
           <li>• Each department can contain multiple knowledge documents</li>
           <li>• When you create a chatbot, you can select which departments it should use</li>
           <li>• This allows you to create specialized chatbots (e.g., Sales Bot, Support Bot)</li>

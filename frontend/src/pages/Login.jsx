@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../stores/authStore'
-import { MessageCircle, Loader2, Info } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -25,64 +25,61 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-blue-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-primary-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-[400px]">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-600 rounded-2xl mb-4">
-            <MessageCircle className="w-8 h-8 text-white" />
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-600 rounded-apple-xl mb-5">
+            <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+            </svg>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">CustoPilot</h1>
-          <p className="text-gray-500 mt-1">AI-Powered Customer Support</p>
+          <h1 className="text-[32px] font-semibold text-primary-600 tracking-tight">CustoPilot</h1>
+          <p className="text-[17px] text-primary-400 mt-1">AI-Powered Customer Support</p>
         </div>
 
-        {/* Demo Account Card */}
-        <div className="mb-4 p-4 bg-primary-50 border border-primary-200 rounded-xl">
-          <div className="flex items-start gap-3">
-            <Info className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
-            <div>
-              <p className="font-medium text-primary-900">Try the Demo</p>
-              <p className="text-sm text-primary-700 mt-1">
-                Sign in with: <span className="font-mono">admin@custopilot.com</span> / <span className="font-mono">admin123</span>
-              </p>
-              <button
-                type="button"
-                onClick={fillDemoCredentials}
-                className="mt-2 text-sm text-primary-600 hover:text-primary-800 font-medium underline"
-              >
-                Click to autofill
-              </button>
-            </div>
-          </div>
+        {/* Demo Account Notice */}
+        <div className="mb-6 p-4 bg-white border border-primary-200 rounded-apple">
+          <p className="text-[15px] font-medium text-primary-600">Try the Demo</p>
+          <p className="text-[13px] text-primary-400 mt-1.5 leading-relaxed">
+            Sign in with <span className="font-mono text-primary-500">admin@custopilot.com</span> / <span className="font-mono text-primary-500">admin123</span>
+          </p>
+          <button
+            type="button"
+            onClick={fillDemoCredentials}
+            className="mt-3 text-[13px] text-accent-500 hover:text-accent-600 font-medium"
+          >
+            Click to autofill
+          </button>
         </div>
 
         {/* Login Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">Sign in to your account</h2>
+        <div className="bg-white rounded-apple-lg shadow-card p-8">
+          <h2 className="text-[21px] font-semibold text-primary-600 mb-6">Sign in</h2>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+            <div className="mb-5 p-3 bg-red-50 border border-red-200 rounded-apple text-[13px] text-red-600">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email address
+              <label className="block text-[13px] font-medium text-primary-500 mb-1.5">
+                Email
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="w-full px-4 py-3 bg-primary-50 border border-primary-200 rounded-apple text-[15px] text-primary-600 placeholder-primary-400 focus:bg-white focus:border-primary-300 transition-colors"
                 placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-[13px] font-medium text-primary-500 mb-1.5">
                 Password
               </label>
               <input
@@ -90,7 +87,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="w-full px-4 py-3 bg-primary-50 border border-primary-200 rounded-apple text-[15px] text-primary-600 placeholder-primary-400 focus:bg-white focus:border-primary-300 transition-colors"
                 placeholder="••••••••"
               />
             </div>
@@ -98,16 +95,16 @@ export default function Login() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-2 px-4 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 bg-accent-500 text-white rounded-apple text-[15px] font-medium hover:bg-accent-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-colors"
             >
               {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
               Sign in
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-gray-500">
+          <div className="mt-6 text-center text-[13px] text-primary-400">
             Don't have an account?{' '}
-            <Link to="/register" className="text-primary-600 hover:text-primary-700 font-medium">
+            <Link to="/register" className="text-accent-500 hover:text-accent-600 font-medium">
               Sign up
             </Link>
           </div>

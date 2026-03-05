@@ -15,9 +15,9 @@ import { format } from 'date-fns'
 import { Link } from 'react-router-dom'
 
 const statusFilters = [
-  { value: 'pending', label: 'Pending', color: 'bg-amber-100 text-amber-800' },
-  { value: 'in_progress', label: 'In Progress', color: 'bg-blue-100 text-blue-800' },
-  { value: 'resolved', label: 'Resolved', color: 'bg-green-100 text-green-800' },
+  { value: 'pending', label: 'Pending', color: 'bg-amber-50 text-amber-700 border border-amber-200' },
+  { value: 'in_progress', label: 'In Progress', color: 'bg-accent-500/10 text-accent-600 border border-accent-500/20' },
+  { value: 'resolved', label: 'Resolved', color: 'bg-emerald-50 text-emerald-700 border border-emerald-200' },
 ]
 
 export default function Escalations() {
@@ -51,7 +51,7 @@ export default function Escalations() {
   const getStatusBadge = (status) => {
     const config = statusFilters.find(s => s.value === status) || statusFilters[0]
     return (
-      <span className={`px-2 py-1 rounded-full text-xs font-medium ${config.color}`}>
+      <span className={`px-2.5 py-1 rounded-full text-[11px] font-medium ${config.color}`}>
         {config.label}
       </span>
     )
@@ -61,8 +61,8 @@ export default function Escalations() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Escalations</h1>
-        <p className="text-gray-500 mt-1">Manage escalated conversations requiring human attention</p>
+        <h1 className="text-[28px] font-semibold text-primary-600">Escalations</h1>
+        <p className="text-[14px] text-primary-400 mt-1">Manage escalated conversations requiring human attention</p>
       </div>
 
       {/* Filters */}
@@ -72,10 +72,10 @@ export default function Escalations() {
             <button
               key={filter.value}
               onClick={() => setStatusFilter(filter.value)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`px-4 py-2.5 rounded-apple text-[14px] font-medium transition-all ${
                 statusFilter === filter.value
-                  ? 'bg-primary-600 text-white'
-                  : 'bg-white text-gray-700 border border-gray-300 hover:border-primary-300'
+                  ? 'bg-accent-500 text-white'
+                  : 'bg-white text-primary-600 border border-primary-200 hover:border-accent-500/30'
               }`}
             >
               {filter.label}
@@ -84,35 +84,35 @@ export default function Escalations() {
         </div>
 
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-400" />
           <input
             type="text"
             placeholder="Search escalations..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+            className="w-full pl-10 pr-4 py-2.5 bg-primary-50 border border-primary-200 rounded-apple text-[14px] text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/30 focus:border-accent-500 transition-colors"
           />
         </div>
       </div>
 
       {/* Escalations List */}
-      <div className="bg-white rounded-xl border border-gray-200">
+      <div className="bg-white rounded-apple-lg border border-primary-200 shadow-card">
         {isLoading ? (
           <div className="flex items-center justify-center h-32">
-            <Loader2 className="w-6 h-6 animate-spin text-primary-600" />
+            <Loader2 className="w-6 h-6 animate-spin text-accent-500" />
           </div>
         ) : filteredEscalations.length === 0 ? (
           <div className="p-8 text-center">
-            <CheckCircle className="w-12 h-12 text-green-300 mx-auto mb-4" />
-            <p className="text-gray-500">No {statusFilter} escalations</p>
+            <CheckCircle className="w-12 h-12 text-emerald-300 mx-auto mb-4" />
+            <p className="text-[14px] text-primary-400">No {statusFilter} escalations</p>
           </div>
         ) : (
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-primary-100">
             {filteredEscalations.map((escalation) => (
               <div
                 key={escalation.id}
-                className={`p-4 hover:bg-gray-50 cursor-pointer ${
-                  selectedEscalation?.id === escalation.id ? 'bg-primary-50' : ''
+                className={`p-4 hover:bg-primary-50 cursor-pointer transition-colors ${
+                  selectedEscalation?.id === escalation.id ? 'bg-accent-500/5' : ''
                 }`}
                 onClick={() => setSelectedEscalation(escalation)}
               >
@@ -120,11 +120,11 @@ export default function Escalations() {
                   <div className="flex-1">
                     <div className="flex items-center gap-3">
                       <AlertTriangle className="w-5 h-5 text-red-500" />
-                      <span className="font-medium text-gray-900">{escalation.reason}</span>
+                      <span className="text-[14px] font-medium text-primary-600">{escalation.reason}</span>
                       {getStatusBadge(escalation.status)}
                     </div>
                     
-                    <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
+                    <div className="flex items-center gap-4 mt-2 text-[13px] text-primary-400">
                       <span className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />
                         {format(new Date(escalation.created_at), 'PPp')}
@@ -145,7 +145,7 @@ export default function Escalations() {
                   <Link
                     to={`/support/conversations/${escalation.conversation_id}`}
                     onClick={(e) => e.stopPropagation()}
-                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200"
+                    className="px-3 py-1.5 bg-primary-100 text-[13px] text-primary-600 rounded-apple hover:bg-primary-200 transition-colors"
                   >
                     View Conversation
                   </Link>
@@ -158,26 +158,26 @@ export default function Escalations() {
 
       {/* Resolution Modal */}
       {selectedEscalation && selectedEscalation.status === 'pending' && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 max-w-lg w-full mx-4">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white rounded-apple-lg p-6 max-w-lg w-full mx-4 shadow-modal">
+            <h3 className="text-[17px] font-semibold text-primary-600 mb-4">
               Resolve Escalation
             </h3>
 
-            <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-              <p className="text-sm font-medium text-gray-700">Reason:</p>
-              <p className="text-gray-600">{selectedEscalation.reason}</p>
+            <div className="mb-4 p-3 bg-primary-50 rounded-apple">
+              <p className="text-[13px] font-medium text-primary-500">Reason:</p>
+              <p className="text-[14px] text-primary-600">{selectedEscalation.reason}</p>
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-[13px] font-medium text-primary-500 mb-2">
                 Resolution Notes
               </label>
               <textarea
                 value={resolution}
                 onChange={(e) => setResolution(e.target.value)}
                 rows={4}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="w-full p-3.5 bg-primary-50 border border-primary-200 rounded-apple text-[14px] text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/30 focus:border-accent-500 transition-colors"
                 placeholder="Describe how you resolved this escalation..."
               />
             </div>
@@ -188,7 +188,7 @@ export default function Escalations() {
                   setSelectedEscalation(null)
                   setResolution('')
                 }}
-                className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+                className="px-4 py-2.5 text-[14px] font-medium text-primary-600 bg-primary-100 rounded-apple hover:bg-primary-200 transition-colors"
               >
                 Cancel
               </button>
@@ -198,7 +198,7 @@ export default function Escalations() {
                   resolution,
                 })}
                 disabled={!resolution.trim() || resolveMutation.isPending}
-                className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                className="px-4 py-2.5 text-[14px] font-medium bg-accent-500 text-white rounded-apple hover:bg-accent-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transition-colors"
               >
                 {resolveMutation.isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                 Resolve

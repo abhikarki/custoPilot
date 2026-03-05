@@ -3,64 +3,68 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 1.47059;
   font-weight: 400;
+  letter-spacing: -0.022em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background: #ffffff;
+  color: #1d1d1f;
 }
 
-/* Custom scrollbar */
+/* Apple-style subtle scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
+  background: rgba(0, 0, 0, 0.3);
 }
 
-/* Chat message animations */
-@keyframes fadeInUp {
+/* Refined message transitions */
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.3s ease-out;
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out;
 }
 
-/* Typing indicator */
-@keyframes typing {
-  0%, 60%, 100% {
-    transform: translateY(0);
+/* Subtle typing indicator */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.4;
   }
-  30% {
-    transform: translateY(-4px);
+  50% {
+    opacity: 1;
   }
 }
 
 .typing-dot {
-  animation: typing 1.4s infinite;
+  animation: pulse 1.4s infinite;
 }
 
 .typing-dot:nth-child(2) {
@@ -69,4 +73,20 @@ body {
 
 .typing-dot:nth-child(3) {
   animation-delay: 0.4s;
+}
+
+/* Apple-style focus rings */
+input:focus, textarea:focus, select:focus, button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.3);
+}
+
+/* Apple-style button transitions */
+button {
+  transition: all 0.2s ease;
+}
+
+/* Apple-style selection */
+::selection {
+  background: rgba(0, 113, 227, 0.2);
 }

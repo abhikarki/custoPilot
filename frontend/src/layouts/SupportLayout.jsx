@@ -28,32 +28,32 @@ export default function SupportLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Sidebar */}
       <aside
         className={clsx(
-          'fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-200',
+          'fixed inset-y-0 left-0 z-50 w-[260px] bg-primary-100 border-r border-primary-200 transform transition-transform duration-200',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         {/* Logo */}
-        <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200">
-          <div>
-            <span className="text-xl font-bold text-primary-600">CustoPilot</span>
-            <span className="ml-2 text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
+        <div className="flex items-center justify-between h-14 px-5 border-b border-primary-200">
+          <div className="flex items-center gap-2">
+            <span className="text-[17px] font-semibold text-primary-600 tracking-tight">CustoPilot</span>
+            <span className="text-[11px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-medium">
               Support
             </span>
           </div>
           <button
             onClick={() => setSidebarOpen(false)}
-            className="lg:hidden p-1 rounded-md hover:bg-gray-100"
+            className="lg:hidden p-1.5 rounded-lg hover:bg-primary-200 text-primary-500 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-2 py-4 space-y-1">
+        <nav className="flex-1 px-3 py-4 space-y-0.5">
           {navItems.map((item) => (
             <NavLink
               key={item.path}
@@ -61,36 +61,36 @@ export default function SupportLayout() {
               end={item.exact}
               className={({ isActive }) =>
                 clsx(
-                  'flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                  'flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-medium transition-colors',
                   isActive
-                    ? 'bg-primary-50 text-primary-700'
-                    : 'text-gray-600 hover:bg-gray-100'
+                    ? 'bg-white text-primary-600 shadow-subtle'
+                    : 'text-primary-500 hover:bg-primary-200/60'
                 )
               }
             >
-              <item.icon className="w-5 h-5" />
+              <item.icon className="w-[18px] h-[18px]" />
               {item.label}
             </NavLink>
           ))}
         </nav>
 
         {/* User Info */}
-        <div className="border-t border-gray-200 p-4">
+        <div className="border-t border-primary-200 p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
-                <span className="text-sm font-medium text-amber-700">
+              <div className="w-9 h-9 bg-amber-600 rounded-full flex items-center justify-center">
+                <span className="text-[14px] font-medium text-white">
                   {user?.full_name?.[0] || user?.email?.[0] || 'S'}
                 </span>
               </div>
-              <div className="text-sm">
-                <p className="font-medium text-gray-900">{user?.full_name || 'Support'}</p>
-                <p className="text-gray-500 text-xs capitalize">{user?.role}</p>
+              <div>
+                <p className="text-[14px] font-medium text-primary-600">{user?.full_name || 'Support'}</p>
+                <p className="text-[12px] text-primary-400 capitalize">{user?.role}</p>
               </div>
             </div>
             <button
               onClick={handleLogout}
-              className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100"
+              className="p-2 text-primary-400 hover:text-primary-600 rounded-lg hover:bg-primary-200 transition-colors"
               title="Logout"
             >
               <LogOut className="w-4 h-4" />
@@ -100,13 +100,13 @@ export default function SupportLayout() {
       </aside>
 
       {/* Main Content */}
-      <div className={clsx('transition-all duration-200', sidebarOpen ? 'lg:ml-64' : 'ml-0')}>
+      <div className={clsx('transition-all duration-200', sidebarOpen ? 'lg:ml-[260px]' : 'ml-0')}>
         {/* Top Bar */}
-        <header className="sticky top-0 z-40 bg-white border-b border-gray-200">
-          <div className="flex items-center justify-between h-16 px-4">
+        <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-primary-200">
+          <div className="flex items-center justify-between h-14 px-5">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="p-2 rounded-lg hover:bg-gray-100"
+              className="p-2 rounded-lg hover:bg-primary-100 text-primary-500 transition-colors"
             >
               <Menu className="w-5 h-5" />
             </button>
@@ -114,7 +114,7 @@ export default function SupportLayout() {
             {user?.role === 'admin' && (
               <NavLink
                 to="/admin"
-                className="text-sm text-gray-600 hover:text-primary-600"
+                className="text-[13px] text-primary-400 hover:text-accent-500 font-medium transition-colors"
               >
                 ← Admin Dashboard
               </NavLink>

@@ -196,23 +196,23 @@ export default function ChatbotBuilder() {
 
   if (!organizationId) {
     return (
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 text-center">
-        <p className="text-amber-700">No organization found. Please log out and register again.</p>
+      <div className="bg-amber-50 border border-amber-200 rounded-apple p-6 text-center">
+        <p className="text-[14px] text-amber-700">No organization found. Please log out and register again.</p>
       </div>
     )
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Chatbot Builder</h1>
-          <p className="text-gray-500 mt-1">Create and configure AI chatbots</p>
+          <h1 className="text-[28px] font-semibold text-primary-600 tracking-tight">Chatbots</h1>
+          <p className="text-[15px] text-primary-400 mt-1">Create and configure AI chatbots</p>
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+          className="flex items-center gap-2 px-4 py-2.5 bg-accent-500 text-white rounded-apple text-[14px] font-medium hover:bg-accent-600 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Create Chatbot
@@ -221,26 +221,26 @@ export default function ChatbotBuilder() {
 
       {/* Create/Edit Modal */}
       {showCreate && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white">
-              <h2 className="text-xl font-bold text-gray-900">
+        <div className="fixed inset-0 bg-primary-600/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-apple-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-modal">
+            <div className="p-5 border-b border-primary-200 flex items-center justify-between sticky top-0 bg-white rounded-t-apple-lg">
+              <h2 className="text-[19px] font-semibold text-primary-600">
                 {editingBot ? 'Edit Chatbot' : 'Create Chatbot'}
               </h2>
-              <button onClick={resetForm} className="p-1 hover:bg-gray-100 rounded">
-                <X className="w-5 h-5" />
+              <button onClick={resetForm} className="p-1.5 hover:bg-primary-100 rounded-lg transition-colors">
+                <X className="w-5 h-5 text-primary-500" />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-6 space-y-6">
+            <form onSubmit={handleSubmit} className="p-5 space-y-6">
               {/* Basic Info */}
               <div className="space-y-4">
-                <h3 className="font-medium text-gray-900 flex items-center gap-2">
+                <h3 className="text-[15px] font-medium text-primary-600 flex items-center gap-2">
                   <Bot className="w-5 h-5" /> Basic Info
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[13px] font-medium text-primary-500 mb-1.5">
                       Chatbot Name *
                     </label>
                     <input
@@ -248,12 +248,12 @@ export default function ChatbotBuilder() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="e.g., Sales Assistant"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                      className="w-full px-3.5 py-2.5 bg-primary-50 border border-primary-200 rounded-apple text-[14px] text-primary-600 placeholder-primary-400 focus:bg-white focus:border-primary-300 transition-colors"
                       required
                     />
                   </div>
                   <div className="col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[13px] font-medium text-primary-500 mb-1.5">
                       Description
                     </label>
                     <textarea
@@ -261,7 +261,7 @@ export default function ChatbotBuilder() {
                       onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                       placeholder="What does this chatbot help with?"
                       rows={2}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                      className="w-full px-3.5 py-2.5 bg-primary-50 border border-primary-200 rounded-apple text-[14px] text-primary-600 placeholder-primary-400 focus:bg-white focus:border-primary-300 resize-none transition-colors"
                     />
                   </div>
                 </div>
@@ -269,11 +269,11 @@ export default function ChatbotBuilder() {
 
               {/* Knowledge Sources (Departments & Documents) */}
               <div className="space-y-4">
-                <h3 className="font-medium text-gray-900 flex items-center gap-2">
+                <h3 className="text-[15px] font-medium text-primary-600 flex items-center gap-2">
                   <Folder className="w-5 h-5" /> Knowledge Sources
                 </h3>
-                <p className="text-sm text-gray-500">
-                  Select departments and optionally specific documents. If no documents are selected, all documents from selected departments will be used.
+                <p className="text-[13px] text-primary-400">
+                  Select departments and optionally specific documents
                 </p>
                 {deptsData?.data?.length > 0 ? (
                   <div className="space-y-2">
@@ -284,23 +284,23 @@ export default function ChatbotBuilder() {
                       const selectedDocsInDept = deptDocs.filter(d => formData.document_ids.includes(d.id)).length
                       
                       return (
-                        <div key={dept.id} className="border border-gray-200 rounded-lg overflow-hidden">
+                        <div key={dept.id} className="border border-primary-200 rounded-apple overflow-hidden">
                           {/* Department Header */}
-                          <div className={`flex items-center p-3 ${isDeptSelected ? 'bg-primary-50' : 'bg-white'}`}>
+                          <div className={`flex items-center p-3 ${isDeptSelected ? 'bg-accent-500/5' : 'bg-white'}`}>
                             <button
                               type="button"
                               onClick={() => toggleDepartment(dept.id)}
-                              className={`w-5 h-5 rounded border flex items-center justify-center mr-3 ${
+                              className={`w-5 h-5 rounded-md border flex items-center justify-center mr-3 transition-colors ${
                                 isDeptSelected
-                                  ? 'bg-primary-600 border-primary-600'
-                                  : 'border-gray-300'
+                                  ? 'bg-accent-500 border-accent-500'
+                                  : 'border-primary-300'
                               }`}
                             >
                               {isDeptSelected && <Check className="w-3 h-3 text-white" />}
                             </button>
                             <div className="flex-1" onClick={() => toggleDepartment(dept.id)}>
-                              <p className="font-medium text-sm">{dept.name}</p>
-                              <p className="text-xs text-gray-500">
+                              <p className="text-[14px] font-medium text-primary-600">{dept.name}</p>
+                              <p className="text-[12px] text-primary-400">
                                 {deptDocs.length} documents
                                 {selectedDocsInDept > 0 && isDeptSelected && ` (${selectedDocsInDept} selected)`}
                               </p>
@@ -309,12 +309,12 @@ export default function ChatbotBuilder() {
                               <button
                                 type="button"
                                 onClick={() => toggleExpandDept(dept.id)}
-                                className="p-1 hover:bg-gray-100 rounded"
+                                className="p-1.5 hover:bg-primary-100 rounded-lg transition-colors"
                               >
                                 {isExpanded ? (
-                                  <ChevronDown className="w-4 h-4 text-gray-500" />
+                                  <ChevronDown className="w-4 h-4 text-primary-400" />
                                 ) : (
-                                  <ChevronRight className="w-4 h-4 text-gray-500" />
+                                  <ChevronRight className="w-4 h-4 text-primary-400" />
                                 )}
                               </button>
                             )}
@@ -322,8 +322,8 @@ export default function ChatbotBuilder() {
                           
                           {/* Documents List */}
                           {isExpanded && isDeptSelected && deptDocs.length > 0 && (
-                            <div className="border-t border-gray-200 bg-gray-50 p-3 space-y-2">
-                              <p className="text-xs text-gray-500 mb-2">
+                            <div className="border-t border-primary-200 bg-primary-50 p-3 space-y-2">
+                              <p className="text-[11px] text-primary-400 mb-2">
                                 Select specific documents (leave unchecked to use all):
                               </p>
                               {deptDocs.map((doc) => (
@@ -331,10 +331,10 @@ export default function ChatbotBuilder() {
                                   key={doc.id}
                                   type="button"
                                   onClick={() => toggleDocument(doc.id)}
-                                  className={`flex items-center gap-2 w-full p-2 rounded-lg text-left text-sm ${
+                                  className={`flex items-center gap-2 w-full p-2.5 rounded-apple text-left text-[13px] transition-colors ${
                                     formData.document_ids.includes(doc.id)
-                                      ? 'bg-primary-100 text-primary-700'
-                                      : 'bg-white hover:bg-gray-100'
+                                      ? 'bg-accent-500/10 text-accent-600'
+                                      : 'bg-white hover:bg-primary-100 text-primary-600'
                                   }`}
                                 >
                                   <FileText className="w-4 h-4 flex-shrink-0" />
@@ -351,30 +351,30 @@ export default function ChatbotBuilder() {
                     })}
                   </div>
                 ) : (
-                  <div className="text-sm text-amber-600 bg-amber-50 p-3 rounded-lg">
-                    No departments created yet. Create departments first to add knowledge sources.
+                  <div className="text-[13px] text-amber-700 bg-amber-50 p-3 rounded-apple border border-amber-200">
+                    No departments created yet. Create departments first.
                   </div>
                 )}
               </div>
 
               {/* Messages */}
               <div className="space-y-4">
-                <h3 className="font-medium text-gray-900 flex items-center gap-2">
+                <h3 className="text-[15px] font-medium text-primary-600 flex items-center gap-2">
                   <MessageSquare className="w-5 h-5" /> Messages
                 </h3>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[13px] font-medium text-primary-500 mb-1.5">
                     Welcome Message
                   </label>
                   <input
                     type="text"
                     value={formData.welcome_message}
                     onChange={(e) => setFormData({ ...formData, welcome_message: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-3.5 py-2.5 bg-primary-50 border border-primary-200 rounded-apple text-[14px] text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/30 focus:border-accent-500 transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[13px] font-medium text-primary-500 mb-1.5">
                     System Prompt (Advanced)
                   </label>
                   <textarea
@@ -382,20 +382,20 @@ export default function ChatbotBuilder() {
                     onChange={(e) => setFormData({ ...formData, system_prompt: e.target.value })}
                     placeholder="Custom instructions for the AI (e.g., tone, specific rules)"
                     rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 font-mono text-sm"
+                    className="w-full px-3.5 py-2.5 bg-primary-50 border border-primary-200 rounded-apple text-[13px] text-primary-600 font-mono focus:outline-none focus:ring-2 focus:ring-accent-500/30 focus:border-accent-500 transition-colors"
                   />
                 </div>
               </div>
 
               {/* Settings */}
               <div className="space-y-4">
-                <h3 className="font-medium text-gray-900 flex items-center gap-2">
+                <h3 className="text-[15px] font-medium text-primary-600 flex items-center gap-2">
                   <Sliders className="w-5 h-5" /> Settings
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Temperature: {formData.temperature}
+                  <div className="bg-primary-50 rounded-apple p-4">
+                    <label className="block text-[13px] font-medium text-primary-500 mb-2">
+                      Temperature: <span className="text-accent-600">{formData.temperature}</span>
                     </label>
                     <input
                       type="range"
@@ -404,15 +404,15 @@ export default function ChatbotBuilder() {
                       step="0.1"
                       value={formData.temperature}
                       onChange={(e) => setFormData({ ...formData, temperature: parseFloat(e.target.value) })}
-                      className="w-full"
+                      className="w-full accent-accent-500"
                     />
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-[11px] text-primary-400 mt-1.5">
                       Lower = more focused, Higher = more creative
                     </p>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Escalation Threshold: {formData.confidence_threshold}
+                  <div className="bg-primary-50 rounded-apple p-4">
+                    <label className="block text-[13px] font-medium text-primary-500 mb-2">
+                      Escalation Threshold: <span className="text-accent-600">{formData.confidence_threshold}</span>
                     </label>
                     <input
                       type="range"
@@ -421,9 +421,9 @@ export default function ChatbotBuilder() {
                       step="0.1"
                       value={formData.confidence_threshold}
                       onChange={(e) => setFormData({ ...formData, confidence_threshold: parseFloat(e.target.value) })}
-                      className="w-full"
+                      className="w-full accent-accent-500"
                     />
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-[11px] text-primary-400 mt-1.5">
                       Below this confidence → escalate to human
                     </p>
                   </div>
@@ -432,21 +432,21 @@ export default function ChatbotBuilder() {
 
               {/* Appearance */}
               <div className="space-y-4">
-                <h3 className="font-medium text-gray-900 flex items-center gap-2">
+                <h3 className="text-[15px] font-medium text-primary-600 flex items-center gap-2">
                   <Palette className="w-5 h-5" /> Appearance
                 </h3>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-[13px] font-medium text-primary-500 mb-3">
                     Primary Color
                   </label>
-                  <div className="flex items-center gap-2 flex-wrap">
+                  <div className="flex items-center gap-3 flex-wrap">
                     {colorPresets.map((color) => (
                       <button
                         key={color}
                         type="button"
                         onClick={() => setFormData({ ...formData, primary_color: color })}
-                        className={`w-8 h-8 rounded-full transition-transform ${
-                          formData.primary_color === color ? 'ring-2 ring-offset-2 ring-gray-400 scale-110' : ''
+                        className={`w-9 h-9 rounded-full transition-all duration-200 ${
+                          formData.primary_color === color ? 'ring-2 ring-offset-2 ring-primary-400 scale-110' : 'hover:scale-105'
                         }`}
                         style={{ backgroundColor: color }}
                       />
@@ -455,24 +455,24 @@ export default function ChatbotBuilder() {
                       type="color"
                       value={formData.primary_color}
                       onChange={(e) => setFormData({ ...formData, primary_color: e.target.value })}
-                      className="w-8 h-8 rounded cursor-pointer"
+                      className="w-9 h-9 rounded-full cursor-pointer border-2 border-primary-200"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Preview */}
-              <div className="bg-gray-50 rounded-xl p-4">
-                <h4 className="text-sm font-medium text-gray-700 mb-3">Preview</h4>
+              <div className="bg-primary-50 rounded-apple p-5">
+                <h4 className="text-[13px] font-medium text-primary-500 mb-3">Preview</h4>
                 <div className="flex items-start gap-3">
                   <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center"
+                    className="w-10 h-10 rounded-full flex items-center justify-center shadow-subtle"
                     style={{ backgroundColor: formData.primary_color }}
                   >
-                    <Bot className="w-6 h-6 text-white" />
+                    <Bot className="w-5 h-5 text-white" />
                   </div>
                   <div
-                    className="px-4 py-2 rounded-2xl text-white max-w-xs"
+                    className="px-4 py-2.5 rounded-2xl text-white text-[14px] max-w-xs shadow-subtle"
                     style={{ backgroundColor: formData.primary_color }}
                   >
                     {formData.welcome_message || 'Hi! How can I help you?'}
@@ -481,18 +481,18 @@ export default function ChatbotBuilder() {
               </div>
 
               {/* Submit */}
-              <div className="flex justify-end gap-3 pt-4 border-t">
+              <div className="flex justify-end gap-3 pt-5 border-t border-primary-200">
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
+                  className="px-5 py-2.5 text-[14px] font-medium text-primary-600 bg-primary-100 rounded-apple hover:bg-primary-200 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={!formData.name.trim() || createMutation.isPending || updateMutation.isPending}
-                  className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50"
+                  className="flex items-center gap-2 px-5 py-2.5 text-[14px] font-medium bg-accent-500 text-white rounded-apple hover:bg-accent-600 disabled:opacity-50 transition-colors"
                 >
                   {(createMutation.isPending || updateMutation.isPending) && (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -507,25 +507,25 @@ export default function ChatbotBuilder() {
 
       {/* Embed Code Modal */}
       {showEmbed && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl w-full max-w-lg">
-            <div className="p-6 border-b border-gray-200 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-gray-900">Embed Code</h2>
-              <button onClick={() => setShowEmbed(null)} className="p-1 hover:bg-gray-100 rounded">
-                <X className="w-5 h-5" />
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-apple-lg w-full max-w-lg shadow-modal">
+            <div className="p-5 border-b border-primary-200 flex items-center justify-between">
+              <h2 className="text-[17px] font-semibold text-primary-600">Embed Code</h2>
+              <button onClick={() => setShowEmbed(null)} className="p-1.5 hover:bg-primary-100 rounded-lg transition-colors">
+                <X className="w-5 h-5 text-primary-400" />
               </button>
             </div>
-            <div className="p-6 space-y-4">
-              <p className="text-sm text-gray-600">
+            <div className="p-5 space-y-4">
+              <p className="text-[14px] text-primary-500">
                 Copy and paste this code into your website to embed the chatbot widget.
               </p>
               <div className="relative">
-                <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
+                <pre className="bg-primary-600 text-primary-100 p-4 rounded-apple text-[13px] overflow-x-auto">
                   {embedData?.data?.embed_code || 'Loading...'}
                 </pre>
                 <button
                   onClick={copyEmbed}
-                  className="absolute top-2 right-2 p-2 bg-gray-700 hover:bg-gray-600 rounded text-gray-300"
+                  className="absolute top-2 right-2 p-2 bg-primary-500 hover:bg-primary-400 rounded-lg text-white transition-colors"
                 >
                   {copiedEmbed ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 </button>
@@ -538,90 +538,90 @@ export default function ChatbotBuilder() {
       {/* Chatbots Grid */}
       {isLoading ? (
         <div className="flex items-center justify-center h-64">
-          <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-accent-500" />
         </div>
       ) : !chatbotsData?.data || chatbotsData.data.length === 0 ? (
-        <div className="bg-white rounded-xl p-12 text-center border border-gray-200">
-          <Bot className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No chatbots yet</h3>
-          <p className="text-gray-500 mb-4">
+        <div className="bg-white rounded-apple-lg p-12 text-center border border-primary-200 shadow-card">
+          <Bot className="w-12 h-12 text-primary-300 mx-auto mb-4" />
+          <h3 className="text-[17px] font-semibold text-primary-600 mb-2">No chatbots yet</h3>
+          <p className="text-[14px] text-primary-400 mb-5">
             Create your first chatbot and select which knowledge departments it should use
           </p>
           <button
             onClick={() => setShowCreate(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent-500 text-white text-[14px] font-medium rounded-apple hover:bg-accent-600 transition-colors"
           >
             <Plus className="w-4 h-4" />
             Create First Chatbot
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {chatbotsData.data.map((bot) => (
             <div
               key={bot.id}
-              className="bg-white rounded-xl p-5 border border-gray-200 hover:border-primary-300 hover:shadow-md transition-all group"
+              className="bg-white rounded-apple-lg p-5 border border-primary-200 hover:border-accent-500/30 shadow-card hover:shadow-elevated transition-all"
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center"
+                    className="w-12 h-12 rounded-apple flex items-center justify-center shadow-subtle"
                     style={{ backgroundColor: bot.primary_color }}
                   >
                     <Bot className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">{bot.name}</h3>
-                    <p className="text-sm text-gray-500">{bot.slug}</p>
+                    <h3 className="text-[15px] font-semibold text-primary-600">{bot.name}</h3>
+                    <p className="text-[13px] text-primary-400">{bot.slug}</p>
                   </div>
                 </div>
-                <span className={`px-2 py-1 text-xs rounded-full ${
+                <span className={`px-2.5 py-1 text-[11px] font-medium rounded-full ${
                   bot.is_active
-                    ? 'bg-green-100 text-green-700'
-                    : 'bg-gray-100 text-gray-600'
+                    ? 'bg-emerald-50 text-emerald-600 border border-emerald-200'
+                    : 'bg-primary-100 text-primary-500 border border-primary-200'
                 }`}>
                   {bot.is_active ? 'Active' : 'Inactive'}
                 </span>
               </div>
 
               {bot.description && (
-                <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                <p className="text-[13px] text-primary-500 mb-3 line-clamp-2">
                   {bot.description}
                 </p>
               )}
 
               {/* Departments */}
               <div className="mb-4">
-                <p className="text-xs text-gray-500 mb-2">Knowledge Sources:</p>
-                <div className="flex flex-wrap gap-1">
+                <p className="text-[11px] text-primary-400 mb-2">Knowledge Sources:</p>
+                <div className="flex flex-wrap gap-1.5">
                   {bot.departments?.length > 0 ? (
                     bot.departments.map((dept) => (
                       <span
                         key={dept.id}
-                        className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs"
+                        className="inline-flex items-center gap-1 px-2 py-1 bg-primary-100 text-primary-600 rounded-md text-[11px]"
                       >
                         <Folder className="w-3 h-3" />
                         {dept.name}
                       </span>
                     ))
                   ) : (
-                    <span className="text-xs text-amber-600">No departments selected</span>
+                    <span className="text-[11px] text-amber-600">No departments selected</span>
                   )}
                 </div>
               </div>
 
               {/* Actions */}
-              <div className="flex items-center gap-2 pt-3 border-t border-gray-100">
+              <div className="flex items-center gap-2 pt-3 border-t border-primary-100">
                 <button
                   onClick={() => handleEdit(bot)}
-                  className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-[13px] text-primary-600 hover:bg-primary-100 rounded-apple transition-colors"
                 >
                   <Edit className="w-4 h-4" />
                   Edit
                 </button>
                 <button
                   onClick={() => setShowEmbed(bot.id)}
-                  className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-[13px] text-primary-600 hover:bg-primary-100 rounded-apple transition-colors"
                 >
                   <Code className="w-4 h-4" />
                   Embed
@@ -632,7 +632,7 @@ export default function ChatbotBuilder() {
                       deleteMutation.mutate(bot.id)
                     }
                   }}
-                  className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  className="p-2 text-primary-400 hover:text-red-600 hover:bg-red-50 rounded-apple transition-colors"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>

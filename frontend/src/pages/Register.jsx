@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../stores/authStore'
-import { MessageCircle, Loader2, Lock } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -22,43 +22,40 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-blue-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-primary-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-[400px]">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-600 rounded-2xl mb-4">
-            <MessageCircle className="w-8 h-8 text-white" />
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-600 rounded-apple-xl mb-5">
+            <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+            </svg>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">CustoPilot</h1>
-          <p className="text-gray-500 mt-1">AI-Powered Customer Support</p>
+          <h1 className="text-[32px] font-semibold text-primary-600 tracking-tight">CustoPilot</h1>
+          <p className="text-[17px] text-primary-400 mt-1">AI-Powered Customer Support</p>
         </div>
 
         {/* Invite Only Notice */}
-        <div className="mb-4 p-4 bg-amber-50 border border-amber-200 rounded-xl">
-          <div className="flex items-start gap-3">
-            <Lock className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
-            <div>
-              <p className="font-medium text-amber-900">Invite Only</p>
-              <p className="text-sm text-amber-700 mt-1">
-                Sign ups are currently by invitation only. Please use the demo account to explore the platform.
-              </p>
-              <Link
-                to="/login"
-                className="inline-block mt-2 text-sm text-amber-700 hover:text-amber-900 font-medium underline"
-              >
-                Go to Login
-              </Link>
-            </div>
-          </div>
+        <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-apple">
+          <p className="text-[15px] font-medium text-amber-800">Invite Only</p>
+          <p className="text-[13px] text-amber-700 mt-1.5 leading-relaxed">
+            Sign ups are currently by invitation only. Please use the demo account to explore the platform.
+          </p>
+          <Link
+            to="/login"
+            className="inline-block mt-3 text-[13px] text-amber-700 hover:text-amber-900 font-medium"
+          >
+            Go to Login →
+          </Link>
         </div>
 
         {/* Register Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 opacity-60">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">Create your account</h2>
+        <div className="bg-white rounded-apple-lg shadow-card p-8 opacity-60">
+          <h2 className="text-[21px] font-semibold text-primary-600 mb-6">Create account</h2>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-[13px] font-medium text-primary-500 mb-1.5">
                 Full name
               </label>
               <input
@@ -67,14 +64,14 @@ export default function Register() {
                 value={formData.full_name}
                 onChange={handleChange}
                 disabled
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
+                className="w-full px-4 py-3 bg-primary-100 border border-primary-200 rounded-apple text-[15px] text-primary-400 cursor-not-allowed"
                 placeholder="John Doe"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email address
+              <label className="block text-[13px] font-medium text-primary-500 mb-1.5">
+                Email
               </label>
               <input
                 type="email"
@@ -82,13 +79,13 @@ export default function Register() {
                 value={formData.email}
                 onChange={handleChange}
                 disabled
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
+                className="w-full px-4 py-3 bg-primary-100 border border-primary-200 rounded-apple text-[15px] text-primary-400 cursor-not-allowed"
                 placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-[13px] font-medium text-primary-500 mb-1.5">
                 Password
               </label>
               <input
@@ -97,7 +94,7 @@ export default function Register() {
                 value={formData.password}
                 onChange={handleChange}
                 disabled
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
+                className="w-full px-4 py-3 bg-primary-100 border border-primary-200 rounded-apple text-[15px] text-primary-400 cursor-not-allowed"
                 placeholder="••••••••"
               />
             </div>
@@ -105,15 +102,15 @@ export default function Register() {
             <button
               type="submit"
               disabled
-              className="w-full py-2 px-4 bg-gray-400 text-white rounded-lg font-medium cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 bg-primary-300 text-primary-400 rounded-apple text-[15px] font-medium cursor-not-allowed"
             >
               Registration Disabled
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-gray-500">
+          <div className="mt-6 text-center text-[13px] text-primary-400">
             Already have an account?{' '}
-            <Link to="/login" className="text-primary-600 hover:text-primary-700 font-medium">
+            <Link to="/login" className="text-accent-500 hover:text-accent-600 font-medium">
               Sign in
             </Link>
           </div>

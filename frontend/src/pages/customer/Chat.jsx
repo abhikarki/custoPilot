@@ -4,8 +4,6 @@ import { chatAPI } from '../../api/client'
 import { useChatStore } from '../../stores/chatStore'
 import VoiceSupport from '../../components/VoiceSupport'
 import {
-  Bot,
-  User,
   Send,
   Mic,
   MicOff,
@@ -191,8 +189,10 @@ export default function CustomerChat() {
         className={`flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}
       >
         {!isUser && (
-          <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0">
-            <Bot className="w-5 h-5 text-primary-600" />
+          <div className="w-9 h-9 rounded-full bg-primary-600 flex items-center justify-center flex-shrink-0">
+            <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+            </svg>
           </div>
         )}
 
@@ -200,37 +200,37 @@ export default function CustomerChat() {
           <div
             className={`p-4 ${
               isUser
-                ? 'bg-primary-600 text-white rounded-2xl rounded-br-md'
-                : 'bg-white text-gray-900 rounded-2xl rounded-bl-md shadow-sm border border-gray-100'
+                ? 'bg-accent-500 text-white rounded-apple-lg rounded-br-lg'
+                : 'bg-white text-primary-600 rounded-apple-lg rounded-bl-lg border border-primary-200'
             }`}
           >
-            <p className="whitespace-pre-wrap">{message.content}</p>
+            <p className="whitespace-pre-wrap text-[15px] leading-relaxed">{message.content}</p>
           </div>
 
           {!isUser && (
             <div className="flex items-center gap-2 mt-2">
-              <span className="text-xs text-gray-400">
+              <span className="text-[11px] text-primary-400">
                 {format(new Date(message.created_at), 'p')}
               </span>
               
               {isLowConfidence && (
-                <span className="text-xs text-amber-500 flex items-center gap-1">
+                <span className="text-[11px] text-amber-600 flex items-center gap-1">
                   <HelpCircle className="w-3 h-3" />
                   May need verification
                 </span>
               )}
 
               <div className="flex items-center gap-1 ml-auto">
-                <button className="p-1 hover:bg-gray-100 rounded text-gray-400 hover:text-green-500">
+                <button className="p-1 hover:bg-primary-100 rounded text-primary-300 hover:text-emerald-500 transition-colors">
                   <ThumbsUp className="w-3 h-3" />
                 </button>
-                <button className="p-1 hover:bg-gray-100 rounded text-gray-400 hover:text-red-500">
+                <button className="p-1 hover:bg-primary-100 rounded text-primary-300 hover:text-red-500 transition-colors">
                   <ThumbsDown className="w-3 h-3" />
                 </button>
                 {voiceEnabled && (
                   <button
                     onClick={() => speakText(message.content)}
-                    className="p-1 hover:bg-gray-100 rounded text-gray-400 hover:text-primary-500"
+                    className="p-1 hover:bg-primary-100 rounded text-primary-300 hover:text-accent-500 transition-colors"
                   >
                     <Volume2 className="w-3 h-3" />
                   </button>
@@ -240,15 +240,17 @@ export default function CustomerChat() {
           )}
 
           {isUser && (
-            <p className="text-xs text-gray-400 text-right mt-1">
+            <p className="text-[11px] text-primary-400 text-right mt-1.5">
               {format(new Date(message.created_at), 'p')}
             </p>
           )}
         </div>
 
         {isUser && (
-          <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
-            <User className="w-5 h-5 text-gray-600" />
+          <div className="w-9 h-9 rounded-full bg-primary-200 flex items-center justify-center flex-shrink-0">
+            <svg className="w-5 h-5 text-primary-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+            </svg>
           </div>
         )}
       </div>
@@ -256,7 +258,7 @@ export default function CustomerChat() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50">
+    <div className="h-screen flex flex-col bg-primary-100">
       {/* Voice Support Overlay */}
       {showVoiceSupport && (
         <VoiceSupport
@@ -266,16 +268,18 @@ export default function CustomerChat() {
       )}
       
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-4 py-3">
+      <header className="bg-white/80 backdrop-blur-xl border-b border-primary-200 px-4 py-3">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-primary-600 flex items-center justify-center">
-              <Bot className="w-5 h-5 text-white" />
+              <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+              </svg>
             </div>
             <div>
-              <h1 className="font-semibold text-gray-900">Support Assistant</h1>
-              <p className="text-xs text-green-500 flex items-center gap-1">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+              <h1 className="text-[15px] font-semibold text-primary-600">Support Assistant</h1>
+              <p className="text-[12px] text-emerald-600 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
                 Online
               </p>
             </div>
@@ -284,10 +288,10 @@ export default function CustomerChat() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setVoiceEnabled(!voiceEnabled)}
-              className={`p-2 rounded-lg ${
+              className={`p-2 rounded-apple transition-colors ${
                 voiceEnabled
-                  ? 'bg-primary-100 text-primary-600'
-                  : 'bg-gray-100 text-gray-600'
+                  ? 'bg-accent-500/10 text-accent-500'
+                  : 'bg-primary-100 text-primary-400'
               }`}
               title={voiceEnabled ? 'Disable voice' : 'Enable voice'}
             >
@@ -297,7 +301,7 @@ export default function CustomerChat() {
             {isSpeaking && (
               <button
                 onClick={stopSpeaking}
-                className="p-2 rounded-lg bg-red-100 text-red-600"
+                className="p-2 rounded-apple bg-red-50 text-red-500 transition-colors"
                 title="Stop speaking"
               >
                 <VolumeX className="w-5 h-5" />
@@ -306,7 +310,7 @@ export default function CustomerChat() {
 
             <button
               onClick={startNewConversation}
-              className="p-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200"
+              className="p-2 rounded-apple bg-primary-100 text-primary-400 hover:bg-primary-200 transition-colors"
               title="New conversation"
             >
               <RefreshCw className="w-5 h-5" />
@@ -314,7 +318,7 @@ export default function CustomerChat() {
 
             <button
               onClick={() => setShowVoiceSupport(true)}
-              className="p-2 rounded-lg bg-green-100 text-green-600 hover:bg-green-200"
+              className="p-2 rounded-apple bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-colors"
               title="Voice call"
             >
               <Phone className="w-5 h-5" />
@@ -324,18 +328,20 @@ export default function CustomerChat() {
       </header>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto py-4">
+      <div className="flex-1 overflow-y-auto py-6">
         <div className="max-w-3xl mx-auto px-4 space-y-4">
           {messages.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
-                <Bot className="w-8 h-8 text-primary-600" />
+            <div className="text-center py-16">
+              <div className="w-16 h-16 rounded-full bg-primary-600 flex items-center justify-center mx-auto mb-5">
+                <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+                </svg>
               </div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                How can I help you today?
+              <h2 className="text-[21px] font-semibold text-primary-600 mb-2">
+                How can I help you?
               </h2>
-              <p className="text-gray-500 max-w-md mx-auto">
-                Ask me anything about our products, services, or policies. I'm here to assist you!
+              <p className="text-[15px] text-primary-400 max-w-md mx-auto leading-relaxed">
+                Ask me anything about our products, services, or policies.
               </p>
 
               {/* Quick suggestions */}
@@ -348,7 +354,7 @@ export default function CustomerChat() {
                   <button
                     key={suggestion}
                     onClick={() => setInputValue(suggestion)}
-                    className="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-600 hover:border-primary-300 hover:text-primary-600 transition-colors"
+                    className="px-4 py-2.5 bg-white border border-primary-200 rounded-full text-[13px] text-primary-500 hover:border-primary-300 hover:text-primary-600 transition-colors"
                   >
                     {suggestion}
                   </button>
@@ -361,13 +367,15 @@ export default function CustomerChat() {
               
               {sendMessageMutation.isPending && (
                 <div className="flex gap-3">
-                  <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0">
-                    <Bot className="w-5 h-5 text-primary-600" />
+                  <div className="w-9 h-9 rounded-full bg-primary-600 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+                    </svg>
                   </div>
-                  <div className="bg-white p-4 rounded-2xl rounded-bl-md shadow-sm border border-gray-100">
-                    <div className="flex items-center gap-2 text-gray-500">
+                  <div className="bg-white p-4 rounded-apple-lg rounded-bl-lg border border-primary-200">
+                    <div className="flex items-center gap-2 text-primary-400">
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Thinking...</span>
+                      <span className="text-[14px]">Thinking...</span>
                     </div>
                   </div>
                 </div>
@@ -379,7 +387,7 @@ export default function CustomerChat() {
       </div>
 
       {/* Input */}
-      <div className="bg-white border-t border-gray-200 px-4 py-3">
+      <div className="bg-white/80 backdrop-blur-xl border-t border-primary-200 px-4 py-3">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-end gap-3">
             <div className="flex-1 relative">
@@ -390,17 +398,17 @@ export default function CustomerChat() {
                 onKeyDown={handleKeyDown}
                 placeholder="Type your message..."
                 rows={1}
-                className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 resize-none"
+                className="w-full px-4 py-3 pr-12 bg-primary-50 border border-primary-200 rounded-apple text-[15px] text-primary-600 placeholder-primary-400 focus:bg-white focus:border-primary-300 resize-none transition-colors"
                 style={{ minHeight: '48px', maxHeight: '120px' }}
               />
 
               {('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) && (
                 <button
                   onClick={toggleRecording}
-                  className={`absolute right-3 bottom-3 p-1 rounded-full ${
+                  className={`absolute right-3 bottom-3 p-1 rounded-full transition-colors ${
                     isRecording
-                      ? 'bg-red-100 text-red-600 animate-pulse'
-                      : 'text-gray-400 hover:text-gray-600'
+                      ? 'bg-red-100 text-red-500'
+                      : 'text-primary-400 hover:text-primary-500'
                   }`}
                 >
                   {isRecording ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
@@ -411,7 +419,7 @@ export default function CustomerChat() {
             <button
               onClick={handleSend}
               disabled={!inputValue.trim() || sendMessageMutation.isPending}
-              className="p-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-3 bg-accent-500 text-white rounded-apple hover:bg-accent-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {sendMessageMutation.isPending ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -421,8 +429,8 @@ export default function CustomerChat() {
             </button>
           </div>
 
-          <p className="text-xs text-gray-400 text-center mt-2">
-            Powered by CustoPilot AI • Responses may be generated by AI
+          <p className="text-[11px] text-primary-400 text-center mt-2">
+            Powered by CustoPilot AI
           </p>
         </div>
       </div>

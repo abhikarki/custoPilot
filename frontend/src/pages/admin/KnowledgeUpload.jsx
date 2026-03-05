@@ -12,24 +12,23 @@ import {
   Clock,
   RefreshCw,
   Trash2,
-  Search,
   Eye,
 } from 'lucide-react'
 import { format } from 'date-fns'
 
 const statusColors = {
-  pending: { bg: 'bg-gray-100', text: 'text-gray-600', icon: Clock },
-  processing: { bg: 'bg-blue-100', text: 'text-blue-600', icon: Loader2 },
-  completed: { bg: 'bg-green-100', text: 'text-green-600', icon: CheckCircle },
-  failed: { bg: 'bg-red-100', text: 'text-red-600', icon: XCircle },
+  pending: { bg: 'bg-primary-100', text: 'text-primary-500', icon: Clock },
+  processing: { bg: 'bg-blue-50', text: 'text-blue-600', icon: Loader2 },
+  completed: { bg: 'bg-emerald-50', text: 'text-emerald-600', icon: CheckCircle },
+  failed: { bg: 'bg-red-50', text: 'text-red-600', icon: XCircle },
 }
 
 const typeColors = {
-  faq: 'bg-purple-100 text-purple-700',
-  policy: 'bg-blue-100 text-blue-700',
-  troubleshooting: 'bg-amber-100 text-amber-700',
-  sales: 'bg-green-100 text-green-700',
-  general: 'bg-gray-100 text-gray-700',
+  faq: 'bg-purple-50 text-purple-700',
+  policy: 'bg-blue-50 text-blue-700',
+  troubleshooting: 'bg-amber-50 text-amber-700',
+  sales: 'bg-emerald-50 text-emerald-700',
+  general: 'bg-primary-100 text-primary-500',
 }
 
 export default function KnowledgeUpload() {
@@ -94,31 +93,31 @@ export default function KnowledgeUpload() {
 
   if (!organizationId) {
     return (
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 text-center">
-        <p className="text-amber-700">No organization found. Please log out and register again.</p>
+      <div className="bg-amber-50 border border-amber-200 rounded-apple p-6 text-center">
+        <p className="text-[14px] text-amber-700">No organization found. Please log out and register again.</p>
       </div>
     )
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Knowledge Upload</h1>
-          <p className="text-gray-500 mt-1">Upload and manage knowledge documents</p>
+          <h1 className="text-[28px] font-semibold text-primary-600 tracking-tight">Knowledge</h1>
+          <p className="text-[15px] text-primary-400 mt-1">Upload and manage documents</p>
         </div>
       </div>
 
       {/* Upload Section */}
-      <div className="bg-white rounded-xl p-6 border border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Upload Document</h2>
+      <div className="bg-white rounded-apple p-6 border border-primary-200">
+        <h2 className="text-[17px] font-semibold text-primary-600 mb-4">Upload Document</h2>
         
         <div className="flex items-center gap-4 mb-4">
           <select
             value={selectedDept}
             onChange={(e) => setSelectedDept(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+            className="px-4 py-2.5 bg-primary-50 border border-primary-200 rounded-apple text-[14px] text-primary-600 focus:bg-white focus:border-primary-300 transition-colors"
           >
             <option value="">All Departments</option>
             {deptsData?.data?.map((dept) => (
@@ -131,7 +130,7 @@ export default function KnowledgeUpload() {
 
         <div
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-primary-500 transition-colors"
+          className="border-2 border-dashed border-primary-200 rounded-apple p-8 text-center cursor-pointer hover:border-accent-500 hover:bg-accent-500/5 transition-colors"
         >
           <input
             ref={fileInputRef}
@@ -142,14 +141,14 @@ export default function KnowledgeUpload() {
           />
           {uploadMutation.isPending ? (
             <div className="flex flex-col items-center gap-2">
-              <Loader2 className="w-12 h-12 text-primary-600 animate-spin" />
-              <p className="text-gray-600">Uploading...</p>
+              <Loader2 className="w-10 h-10 text-accent-500 animate-spin" />
+              <p className="text-[14px] text-primary-500">Uploading...</p>
             </div>
           ) : (
             <>
-              <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 font-medium">Click to upload or drag and drop</p>
-              <p className="text-sm text-gray-500 mt-1">PDF, DOCX, TXT, CSV, JSON (max 50MB)</p>
+              <Upload className="w-10 h-10 text-primary-300 mx-auto mb-4" />
+              <p className="text-[14px] font-medium text-primary-500">Click to upload or drag and drop</p>
+              <p className="text-[12px] text-primary-400 mt-1">PDF, DOCX, TXT, CSV, JSON (max 50MB)</p>
             </>
           )}
         </div>
@@ -158,16 +157,16 @@ export default function KnowledgeUpload() {
       {/* Documents List */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900">Documents</h2>
+          <h2 className="text-[17px] font-semibold text-primary-600">Documents</h2>
 
           {isLoading ? (
             <div className="flex items-center justify-center h-32">
-              <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
+              <Loader2 className="w-6 h-6 animate-spin text-accent-500" />
             </div>
           ) : docsData?.data?.length === 0 ? (
-            <div className="bg-white rounded-xl p-8 text-center border border-gray-200">
-              <FileText className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500">No documents uploaded yet</p>
+            <div className="bg-white rounded-apple p-8 text-center border border-primary-200">
+              <FileText className="w-10 h-10 text-primary-300 mx-auto mb-4" />
+              <p className="text-[14px] text-primary-400">No documents uploaded yet</p>
             </div>
           ) : (
             docsData?.data?.map((doc) => {
@@ -176,29 +175,29 @@ export default function KnowledgeUpload() {
                 <div
                   key={doc.id}
                   onClick={() => setSelectedDoc(doc)}
-                  className={`bg-white rounded-xl p-4 border cursor-pointer transition-all ${
+                  className={`bg-white rounded-apple p-4 border cursor-pointer transition-all ${
                     selectedDoc?.id === doc.id
-                      ? 'border-primary-500 ring-2 ring-primary-100'
-                      : 'border-gray-200 hover:border-primary-300'
+                      ? 'border-accent-500 shadow-subtle'
+                      : 'border-primary-200 hover:border-primary-300'
                   }`}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-3">
-                      <div className="p-2 bg-gray-100 rounded-lg">
-                        <File className="w-5 h-5 text-gray-600" />
+                      <div className="p-2 bg-primary-100 rounded-apple">
+                        <File className="w-5 h-5 text-primary-500" />
                       </div>
                       <div>
-                        <h3 className="font-medium text-gray-900">{doc.title}</h3>
-                        <p className="text-sm text-gray-500">
+                        <h3 className="text-[14px] font-medium text-primary-600">{doc.title}</h3>
+                        <p className="text-[12px] text-primary-400">
                           {doc.original_filename} • {doc.file_type?.toUpperCase()}
                         </p>
                         <div className="flex items-center gap-2 mt-2">
-                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[doc.processing_status]?.bg} ${statusColors[doc.processing_status]?.text}`}>
+                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium ${statusColors[doc.processing_status]?.bg} ${statusColors[doc.processing_status]?.text}`}>
                             <StatusIcon className={`w-3 h-3 ${doc.processing_status === 'processing' ? 'animate-spin' : ''}`} />
                             {doc.processing_status}
                           </span>
                           {doc.knowledge_type && (
-                            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${typeColors[doc.knowledge_type]}`}>
+                            <span className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${typeColors[doc.knowledge_type]}`}>
                               {doc.knowledge_type}
                             </span>
                           )}
@@ -212,7 +211,7 @@ export default function KnowledgeUpload() {
                             e.stopPropagation()
                             reprocessMutation.mutate(doc.id)
                           }}
-                          className="p-1 text-gray-400 hover:text-primary-600 rounded"
+                          className="p-1.5 text-primary-400 hover:text-accent-500 rounded-lg hover:bg-primary-100 transition-colors"
                           title="Reprocess"
                         >
                           <RefreshCw className="w-4 h-4" />
@@ -225,7 +224,7 @@ export default function KnowledgeUpload() {
                             deleteMutation.mutate(doc.id)
                           }
                         }}
-                        className="p-1 text-gray-400 hover:text-red-600 rounded"
+                        className="p-1.5 text-primary-400 hover:text-red-500 rounded-lg hover:bg-primary-100 transition-colors"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -239,49 +238,49 @@ export default function KnowledgeUpload() {
 
         {/* Document Details */}
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900">Document Details</h2>
+          <h2 className="text-[17px] font-semibold text-primary-600">Details</h2>
           
           {selectedDoc ? (
-            <div className="bg-white rounded-xl p-4 border border-gray-200 space-y-4">
+            <div className="bg-white rounded-apple p-5 border border-primary-200 space-y-4">
               <div>
-                <p className="text-sm text-gray-500">Title</p>
-                <p className="font-medium">{selectedDoc.title}</p>
+                <p className="text-[12px] text-primary-400">Title</p>
+                <p className="text-[14px] font-medium text-primary-600 mt-0.5">{selectedDoc.title}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Status</p>
-                <p className="font-medium capitalize">{selectedDoc.processing_status}</p>
+                <p className="text-[12px] text-primary-400">Status</p>
+                <p className="text-[14px] font-medium text-primary-600 capitalize mt-0.5">{selectedDoc.processing_status}</p>
               </div>
               {selectedDoc.knowledge_type && (
                 <div>
-                  <p className="text-sm text-gray-500">Knowledge Type</p>
-                  <p className="font-medium capitalize">{selectedDoc.knowledge_type}</p>
+                  <p className="text-[12px] text-primary-400">Type</p>
+                  <p className="text-[14px] font-medium text-primary-600 capitalize mt-0.5">{selectedDoc.knowledge_type}</p>
                 </div>
               )}
               <div>
-                <p className="text-sm text-gray-500">Uploaded</p>
-                <p className="font-medium">
+                <p className="text-[12px] text-primary-400">Uploaded</p>
+                <p className="text-[14px] font-medium text-primary-600 mt-0.5">
                   {format(new Date(selectedDoc.created_at), 'PPp')}
                 </p>
               </div>
               {selectedDoc.processing_error && (
                 <div>
-                  <p className="text-sm text-gray-500">Error</p>
-                  <p className="text-sm text-red-600">{selectedDoc.processing_error}</p>
+                  <p className="text-[12px] text-primary-400">Error</p>
+                  <p className="text-[13px] text-red-600 mt-0.5">{selectedDoc.processing_error}</p>
                 </div>
               )}
               {selectedDoc.structured_content && (
                 <div>
-                  <p className="text-sm text-gray-500 mb-2">Structured Content</p>
-                  <pre className="text-xs bg-gray-50 p-3 rounded-lg overflow-auto max-h-64">
+                  <p className="text-[12px] text-primary-400 mb-2">Structured Content</p>
+                  <pre className="text-[11px] bg-primary-50 p-3 rounded-apple overflow-auto max-h-64 text-primary-600">
                     {JSON.stringify(selectedDoc.structured_content, null, 2)}
                   </pre>
                 </div>
               )}
             </div>
           ) : (
-            <div className="bg-gray-50 rounded-xl p-8 text-center border border-gray-200">
-              <Eye className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500">Select a document to view details</p>
+            <div className="bg-primary-50 rounded-apple p-8 text-center border border-primary-200">
+              <Eye className="w-10 h-10 text-primary-300 mx-auto mb-4" />
+              <p className="text-[14px] text-primary-400">Select a document to view details</p>
             </div>
           )}
         </div>

@@ -6,7 +6,6 @@ import {
   Clock,
   CheckCircle,
   TrendingUp,
-  Users,
   Loader2,
   ArrowRight,
 } from 'lucide-react'
@@ -40,14 +39,14 @@ export default function SupportDashboard() {
       value: queueStats?.total || 0,
       icon: MessageSquare,
       color: 'text-blue-600',
-      bgColor: 'bg-blue-100',
+      bgColor: 'bg-blue-50',
     },
     {
       name: 'Pending Escalations',
       value: escalationsData?.data?.length || 0,
       icon: AlertTriangle,
       color: 'text-red-600',
-      bgColor: 'bg-red-100',
+      bgColor: 'bg-red-50',
       link: '/support/escalations',
     },
     {
@@ -55,23 +54,23 @@ export default function SupportDashboard() {
       value: queueStats?.lowConfidence || 0,
       icon: TrendingUp,
       color: 'text-amber-600',
-      bgColor: 'bg-amber-100',
+      bgColor: 'bg-amber-50',
     },
     {
       name: 'Waiting Customers',
       value: queueStats?.waiting || 0,
       icon: Clock,
       color: 'text-purple-600',
-      bgColor: 'bg-purple-100',
+      bgColor: 'bg-purple-50',
     },
   ]
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Support Dashboard</h1>
-        <p className="text-gray-500 mt-1">Monitor queue and handle escalations</p>
+        <h1 className="text-[28px] font-semibold text-primary-600 tracking-tight">Support</h1>
+        <p className="text-[15px] text-primary-400 mt-1">Monitor queue and handle escalations</p>
       </div>
 
       {/* Stats Grid */}
@@ -79,16 +78,16 @@ export default function SupportDashboard() {
         {stats.map((stat) => (
           <div
             key={stat.name}
-            className="bg-white rounded-xl p-6 border border-gray-200"
+            className="bg-white rounded-apple p-5 border border-primary-200"
           >
             <div className="flex items-center justify-between">
-              <div className={`p-3 rounded-xl ${stat.bgColor}`}>
-                <stat.icon className={`w-6 h-6 ${stat.color}`} />
+              <div className={`p-2.5 rounded-apple ${stat.bgColor}`}>
+                <stat.icon className={`w-5 h-5 ${stat.color}`} />
               </div>
               {stat.link && (
                 <Link
                   to={stat.link}
-                  className="text-primary-600 hover:text-primary-700"
+                  className="text-accent-500 hover:text-accent-600 transition-colors"
                 >
                   <ArrowRight className="w-5 h-5" />
                 </Link>
@@ -96,23 +95,23 @@ export default function SupportDashboard() {
             </div>
             <div className="mt-4">
               {loadingQueue || loadingEscalations ? (
-                <Loader2 className="w-5 h-5 animate-spin text-gray-400" />
+                <Loader2 className="w-5 h-5 animate-spin text-primary-400" />
               ) : (
-                <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
+                <p className="text-[28px] font-semibold text-primary-600 tracking-tight">{stat.value}</p>
               )}
-              <p className="text-sm text-gray-500 mt-1">{stat.name}</p>
+              <p className="text-[13px] text-primary-400 mt-0.5">{stat.name}</p>
             </div>
           </div>
         ))}
       </div>
 
       {/* Recent Escalations */}
-      <div className="bg-white rounded-xl border border-gray-200">
-        <div className="p-6 border-b border-gray-200 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-900">Recent Escalations</h2>
+      <div className="bg-white rounded-apple border border-primary-200">
+        <div className="p-5 border-b border-primary-200 flex items-center justify-between">
+          <h2 className="text-[17px] font-semibold text-primary-600">Recent Escalations</h2>
           <Link
             to="/support/escalations"
-            className="text-sm text-primary-600 hover:text-primary-700 font-medium"
+            className="text-[13px] text-accent-500 hover:text-accent-600 font-medium transition-colors"
           >
             View All
           </Link>
@@ -120,32 +119,32 @@ export default function SupportDashboard() {
 
         {loadingEscalations ? (
           <div className="flex items-center justify-center h-32">
-            <Loader2 className="w-6 h-6 animate-spin text-primary-600" />
+            <Loader2 className="w-5 h-5 animate-spin text-accent-500" />
           </div>
         ) : escalationsData?.data?.length === 0 ? (
           <div className="p-8 text-center">
-            <CheckCircle className="w-12 h-12 text-green-300 mx-auto mb-4" />
-            <p className="text-gray-500">No pending escalations</p>
+            <CheckCircle className="w-10 h-10 text-emerald-300 mx-auto mb-4" />
+            <p className="text-[14px] text-primary-400">No pending escalations</p>
           </div>
         ) : (
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-primary-200">
             {escalationsData?.data?.slice(0, 5).map((escalation) => (
-              <div key={escalation.id} className="p-4 hover:bg-gray-50">
+              <div key={escalation.id} className="p-4 hover:bg-primary-50 transition-colors">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <AlertTriangle className="w-4 h-4 text-red-500" />
-                      <span className="text-sm font-medium text-gray-900">
+                      <span className="text-[14px] font-medium text-primary-600">
                         {escalation.reason}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-500 mt-1 line-clamp-2">
+                    <p className="text-[12px] text-primary-400 mt-1">
                       Conversation: {escalation.conversation_id?.slice(0, 8)}
                     </p>
                   </div>
                   <Link
                     to={`/support/conversations/${escalation.conversation_id}`}
-                    className="px-3 py-1 bg-primary-50 text-primary-600 rounded-lg text-sm hover:bg-primary-100"
+                    className="px-3 py-1.5 bg-accent-500/10 text-accent-500 rounded-apple text-[13px] font-medium hover:bg-accent-500/20 transition-colors"
                   >
                     Handle
                   </Link>
@@ -158,45 +157,45 @@ export default function SupportDashboard() {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
-          <div className="space-y-3">
+        <div className="bg-white rounded-apple p-5 border border-primary-200">
+          <h3 className="text-[17px] font-semibold text-primary-600 mb-4">Quick Actions</h3>
+          <div className="space-y-2">
             <Link
               to="/support/escalations"
-              className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 border border-gray-200"
+              className="flex items-center justify-between p-3 rounded-apple hover:bg-primary-50 border border-primary-200 transition-colors"
             >
               <div className="flex items-center gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-500" />
-                <span className="font-medium">Review Escalations</span>
+                <span className="text-[14px] font-medium text-primary-600">Review Escalations</span>
               </div>
-              <ArrowRight className="w-5 h-5 text-gray-400" />
+              <ArrowRight className="w-4 h-4 text-primary-400" />
             </Link>
             <Link
               to="/support/conversations"
-              className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 border border-gray-200"
+              className="flex items-center justify-between p-3 rounded-apple hover:bg-primary-50 border border-primary-200 transition-colors"
             >
               <div className="flex items-center gap-3">
                 <MessageSquare className="w-5 h-5 text-blue-500" />
-                <span className="font-medium">View Conversations</span>
+                <span className="text-[14px] font-medium text-primary-600">View Conversations</span>
               </div>
-              <ArrowRight className="w-5 h-5 text-gray-400" />
+              <ArrowRight className="w-4 h-4 text-primary-400" />
             </Link>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Tips</h3>
-          <ul className="space-y-3 text-sm text-gray-600">
+        <div className="bg-white rounded-apple p-5 border border-primary-200">
+          <h3 className="text-[17px] font-semibold text-primary-600 mb-4">Tips</h3>
+          <ul className="space-y-3 text-[13px] text-primary-500">
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
               <span>Escalations with low confidence may need manual review</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
               <span>Override AI responses when domain expertise is needed</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
               <span>Resolved escalations help improve the AI over time</span>
             </li>
           </ul>

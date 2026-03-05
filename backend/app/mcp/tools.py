@@ -1,5 +1,7 @@
 from typing import Any, Dict, List, Optional
 import structlog
+from twilio.rest import Client as TwilioClient
+from app.core.config import settings
 
 from app.core.config import settings
 
@@ -126,6 +128,56 @@ class MCPTools:
                 "tool": "escalate_to_human",
                 "escalation_id": str(escalation.id),
                 "status": "created"
+            }
+        
+    @staticmethod
+    async def send_escalation_sms(
+        conversation_id: str,
+        customer_message: str,
+        confidence_score: float,
+        chatbot_name: str = "Support Bot"
+    ) -> dict:
+        
+        #check if Twilio is configured
+        if not settings.TWILIO_ACCOUNT_SID or not settings.SUPPORT_PHONE_NUMBER:
+            return {
+                "tool": "send_escalation_sms",
+                "success": False,
+                "error": "Twilio not configured"
+            }
+
+        try:
+            client = TwilioClient(
+                settings.TWILIO_ACCOUNT_SID,
+                settings.TWILIO_AUTH_TOKEN
+            )
+
+            message_body = (
+                f"New Escalation Alert! \n\n"
+                f"Chatbot: {chatbot_name}\n"
+                f"Conversation: {conversation_id[:8]}...\n"
+                f"Confidence: {confidence_score:.0%}\n\n"
+                f"Customer said: \"{customer_message[:100]}{'...' if len(customer_message) > 100 else ''}\"\n\n"
+                f"Please check the support dashboard."
+            )
+
+            message = client.messages.create(
+                body = message_body,
+                from_ = settings.TWILIO_FROM_NUMBER,
+                to = settings.SUPPORT_PHONE_NUMBER
+            )
+
+            return {
+                "tool": "send_escalation_sms",
+                "success" : True,
+                "message_sid": message.sid
+            }
+
+        except Exception as e:
+            return {
+                "tool": "send_escalation_sms",
+                "success": False,
+                "error": str(e)
             }
     
     @staticmethod

@@ -1,10 +1,9 @@
-"""
-Chat Service for Customer Support Agent Pipeline
-"""
 import uuid
 from typing import Optional, Dict, Any
 from datetime import datetime
 import structlog
+
+from app.mcp.tools import MCPTools
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
@@ -79,6 +78,9 @@ class ChatService:
                     "confidence_threshold": chatbot.confidence_threshold if chatbot else 0.7,
                 } if chatbot else None,
             )
+        
+            if result.get("should_escalate"):
+                result["response"] += "\n\n Connecting you to human support.."
             
             # Update conversation with detected intent
             if result.get("intent"):
@@ -99,6 +101,13 @@ class ChatService:
                     confidence_score=confidence_score,
                 )
                 conversation.status = ConversationStatus.ESCALATED
+
+                await MCPTools.send_escalation_sms(
+                    conversation_id = str(conversation.id),
+                    customer_message = user_message,
+                    confidence_score = confidence_score,
+                    chatbot_name = chatbot.name if chatbot else "Support Bot"
+                )
             
             # Save assistant message
             assistant_message = Message(
@@ -212,7 +221,7 @@ class ChatService:
             priority=priority,
         )
         self.db.add(escalation)
-        
+
         logger.info(
             "Created escalation",
             conversation_id=str(conversation.id),

@@ -23,6 +23,12 @@ class Settings(BaseSettings):
     LANGCHAIN_ENDPOINT: str = "https://api.smith.langchain.com"
     LANGCHAIN_API_KEY: str = ""
     LANGCHAIN_PROJECT: str = "custopilot"
+
+    # Twilio Settings
+    TWILIO_ACCOUNT_SID: str = ""
+    TWILIO_AUTH_TOKEN: str = ""
+    TWILIO_FROM_NUMBER: str = ""
+    SUPPORT_PHONE_NUMBER: str = ""
     
     CHROMA_PERSIST_DIRECTORY: str = str(BACKEND_DIR / "data" / "chroma")
     CHROMA_HOST: Optional[str] = None  # For remote ChromaDB

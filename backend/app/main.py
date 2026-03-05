@@ -11,6 +11,13 @@ from app.core.config import settings
 from app.api import auth, organizations, knowledge, chat, support, agents, voice, chatbots
 from app.db.session import init_db
 
+
+if settings.LANGCHAIN_TRACING_V2 and settings.LANGCHAIN_API_KEY:
+    os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    os.environ["LANGCHAIN_API_KEY"] = settings.LANGCHAIN_API_KEY
+    os.environ["LANGCHAIN_PROJECT"] = settings.LANGCHAIN_PROJECT
+    os.environ["LANGCHAIN_ENDPOINT"] = settings.LANGCHAIN_ENDPOINT
+
 structlog.configure(
     processors=[
         structlog.stdlib.filter_by_level,

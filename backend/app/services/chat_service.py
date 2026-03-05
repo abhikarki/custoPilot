@@ -3,8 +3,6 @@ from typing import Optional, Dict, Any
 from datetime import datetime
 import structlog
 
-from app.mcp.tools import MCPTools
-
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
@@ -101,13 +99,6 @@ class ChatService:
                     confidence_score=confidence_score,
                 )
                 conversation.status = ConversationStatus.ESCALATED
-
-                await MCPTools.send_escalation_sms(
-                    conversation_id = str(conversation.id),
-                    customer_message = user_message,
-                    confidence_score = confidence_score,
-                    chatbot_name = chatbot.name if chatbot else "Support Bot"
-                )
             
             # Save assistant message
             assistant_message = Message(

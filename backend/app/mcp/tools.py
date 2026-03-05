@@ -134,11 +134,12 @@ class MCPTools:
     async def send_escalation_sms(
         conversation_id: str,
         customer_message: str,
-        confidence_score: float,
-        chatbot_name: str = "Support Bot"
+        urgency: str = "medium",
+        reason: str = "Escalation requested"
     ) -> dict:
+        """Send SMS notification to support agent - called by AI agent autonomously"""
         
-        #check if Twilio is configured
+        # Check if Twilio is configured
         if not settings.TWILIO_ACCOUNT_SID or not settings.SUPPORT_PHONE_NUMBER:
             return {
                 "tool": "send_escalation_sms",
@@ -152,28 +153,33 @@ class MCPTools:
                 settings.TWILIO_AUTH_TOKEN
             )
 
+            urgency_emoji = {"low": "📋", "medium": "⚠️", "high": "🚨"}
+            
             message_body = (
-                f"New Escalation Alert! \n\n"
-                f"Chatbot: {chatbot_name}\n"
+                f"{urgency_emoji.get(urgency, '⚠️')} Escalation Alert ({urgency.upper()})\n\n"
                 f"Conversation: {conversation_id[:8]}...\n"
-                f"Confidence: {confidence_score:.0%}\n\n"
+                f"Reason: {reason}\n\n"
                 f"Customer said: \"{customer_message[:100]}{'...' if len(customer_message) > 100 else ''}\"\n\n"
                 f"Please check the support dashboard."
             )
 
             message = client.messages.create(
-                body = message_body,
-                from_ = settings.TWILIO_FROM_NUMBER,
-                to = settings.SUPPORT_PHONE_NUMBER
+                body=message_body,
+                from_=settings.TWILIO_FROM_NUMBER,
+                to=settings.SUPPORT_PHONE_NUMBER
             )
+
+            logger.info("SMS notification sent", message_sid=message.sid, urgency=urgency)
 
             return {
                 "tool": "send_escalation_sms",
-                "success" : True,
-                "message_sid": message.sid
+                "success": True,
+                "message_sid": message.sid,
+                "urgency": urgency
             }
 
         except Exception as e:
+            logger.error("SMS notification failed", error=str(e))
             return {
                 "tool": "send_escalation_sms",
                 "success": False,
@@ -265,6 +271,33 @@ class MCPTools:
                         }
                     },
                     "required": ["conversation_id", "reason"]
+                }
+            },
+            {
+                "name": "send_escalation_sms",
+                "description": "Send SMS notification to human support agent. Use this when the customer needs human help urgently, is frustrated, or the conversation requires immediate human attention. Do NOT use for routine low-confidence responses.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "conversation_id": {
+                            "type": "string",
+                            "description": "Conversation ID"
+                        },
+                        "customer_message": {
+                            "type": "string",
+                            "description": "The customer's message that triggered escalation"
+                        },
+                        "urgency": {
+                            "type": "string",
+                            "enum": ["low", "medium", "high"],
+                            "description": "Urgency level - high for angry customers or urgent issues"
+                        },
+                        "reason": {
+                            "type": "string",
+                            "description": "Brief reason why SMS notification is needed"
+                        }
+                    },
+                    "required": ["conversation_id", "customer_message", "urgency", "reason"]
                 }
             }
         ]

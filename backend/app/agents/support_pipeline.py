@@ -8,6 +8,7 @@ from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
 from app.core.config import settings
 from app.agents.vector_store import VectorStoreManager
+from app.mcp.tools import MCPTools
 
 logger = structlog.get_logger()
 
@@ -31,6 +32,7 @@ class SupportState(TypedDict):
     should_escalate: bool
     agent_name: str
     langsmith_run_id: Optional[str]
+    tool_calls: List[Dict[str, Any]]
 
 
 class SupportAgentPipeline:
@@ -53,6 +55,7 @@ class SupportAgentPipeline:
         workflow.add_node("reasoning_agent", self.reasoning_agent)
         workflow.add_node("response_agent", self.response_agent)
         workflow.add_node("confidence_agent", self.confidence_agent)
+        workflow.add_node("tool_agent", self.tool_agent)
         
         workflow.set_entry_point("intent_agent")
         workflow.add_edge("intent_agent", "router_agent")
@@ -60,7 +63,8 @@ class SupportAgentPipeline:
         workflow.add_edge("retriever_agent", "reasoning_agent")
         workflow.add_edge("reasoning_agent", "response_agent")
         workflow.add_edge("response_agent", "confidence_agent")
-        workflow.add_edge("confidence_agent", END)
+        workflow.add_edge("confidence_agent", "tool_agent")
+        workflow.add_edge("tool_agent", END)
         
         return workflow.compile()
     
@@ -391,6 +395,106 @@ Generate a helpful response (be direct, no formal sign-offs):""")
         
         return state
     
+    async def tool_agent(self, state: SupportState) -> SupportState:
+        """Agent that autonomously decides whether to use tools based on context"""
+        
+        logger.info("Tool agent processing", 
+                   confidence=state.get("confidence_score"),
+                   should_escalate=state.get("should_escalate"))
+        
+        state["tool_calls"] = []
+        
+        # Only consider tool use if escalation is warranted
+        if not state.get("should_escalate"):
+            logger.info("Tool agent: No escalation needed, skipping tool calls")
+            return state
+        
+        try:
+            tool_prompt = ChatPromptTemplate.from_messages([
+                ("system", """You are a tool-calling agent for customer support. Based on the conversation context, decide if you should notify a human support agent via SMS.
+
+Available tool: send_escalation_sms
+- Use for: Frustrated/angry customers, urgent issues, explicit human help requests, complex problems
+- DON'T use for: Simple low-confidence responses, routine questions, greetings
+
+Analyze the conversation and decide:
+1. Should you send an SMS notification to alert human support?
+2. If yes, what urgency level? (low/medium/high)
+
+Return JSON:
+{{"use_sms": true/false, "urgency": "low|medium|high", "reason": "brief reason"}}
+
+Guidelines for urgency:
+- high: Customer is angry, threatening, or has urgent time-sensitive issue
+- medium: Customer is confused, frustrated, or has important unresolved issue  
+- low: Routine escalation, customer is patient"""),
+                ("human", """User message: {user_message}
+
+Conversation history:
+{history}
+
+Customer intent: {intent}
+Confidence score: {confidence}
+AI Response given: {response}
+
+Should you send SMS notification to human support?""")
+            ])
+            
+            history_text = "\n".join([
+                f"{msg['role']}: {msg['content']}"
+                for msg in state.get("conversation_history", [])[-5:]
+            ]) or "No previous conversation."
+            
+            chain = tool_prompt | self.llm
+            result = await chain.ainvoke({
+                "user_message": state["user_message"],
+                "history": history_text,
+                "intent": state.get("intent", "unknown"),
+                "confidence": state.get("confidence_score", 0.5),
+                "response": state.get("response", "")[:200],
+            })
+            
+            import json
+            try:
+                content = result.content
+                if "```json" in content:
+                    content = content.split("```json")[1].split("```")[0]
+                elif "```" in content:
+                    content = content.split("```")[1].split("```")[0]
+                parsed = json.loads(content)
+                
+                if parsed.get("use_sms"):
+                    # Agent decided to send SMS - execute the tool
+                    logger.info("Tool agent: Sending SMS notification", 
+                               urgency=parsed.get("urgency"),
+                               reason=parsed.get("reason"))
+                    
+                    sms_result = await MCPTools.send_escalation_sms(
+                        conversation_id=state.get("organization_id", "unknown"),
+                        customer_message=state["user_message"],
+                        urgency=parsed.get("urgency", "medium"),
+                        reason=parsed.get("reason", "Escalation requested")
+                    )
+                    
+                    state["tool_calls"].append({
+                        "tool": "send_escalation_sms",
+                        "result": sms_result,
+                        "reasoning": parsed.get("reason")
+                    })
+                    
+                    logger.info("Tool agent: SMS sent", result=sms_result)
+                else:
+                    logger.info("Tool agent: Decided not to send SMS", 
+                               reason=parsed.get("reason"))
+                    
+            except Exception as parse_error:
+                logger.warning("Tool agent: Could not parse response", error=str(parse_error))
+            
+        except Exception as e:
+            logger.error("Tool agent failed", error=str(e))
+        
+        return state
+    
     async def run(
         self,
         user_message: str,
@@ -419,6 +523,7 @@ Generate a helpful response (be direct, no formal sign-offs):""")
             "should_escalate": False,
             "agent_name": "",
             "langsmith_run_id": None,
+            "tool_calls": [],
         }
         
         final_state = await self.graph.ainvoke(initial_state)
@@ -433,4 +538,5 @@ Generate a helpful response (be direct, no formal sign-offs):""")
             "should_escalate": final_state.get("should_escalate", False),
             "agent_name": final_state.get("agent_name", "support_pipeline"),
             "langsmith_run_id": final_state.get("langsmith_run_id"),
+            "tool_calls": final_state.get("tool_calls", []),
         }

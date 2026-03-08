@@ -1,20 +1,12 @@
 import { useState } from 'react'
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../stores/authStore'
-import {
-  LayoutDashboard,
-  AlertCircle,
-  MessageSquare,
-  LogOut,
-  Menu,
-  X,
-} from 'lucide-react'
 import clsx from 'clsx'
 
 const navItems = [
-  { path: '/support', label: 'Dashboard', icon: LayoutDashboard, exact: true },
-  { path: '/support/escalations', label: 'Escalations', icon: AlertCircle },
-  { path: '/support/conversations', label: 'Conversations', icon: MessageSquare },
+  { path: '/support', label: 'Overview', exact: true },
+  { path: '/support/escalations', label: 'Escalations' },
+  { path: '/support/conversations', label: 'Conversations' },
 ]
 
 export default function SupportLayout() {
@@ -28,28 +20,20 @@ export default function SupportLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-slate-50">
       {/* Sidebar */}
       <aside
         className={clsx(
-          'fixed inset-y-0 left-0 z-50 w-[260px] bg-primary-100 border-r border-primary-200 transform transition-transform duration-200',
+          'fixed inset-y-0 left-0 z-50 w-60 bg-slate-900 transform transition-transform duration-200',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         {/* Logo */}
-        <div className="flex items-center justify-between h-14 px-5 border-b border-primary-200">
-          <div className="flex items-center gap-2">
-            <span className="text-[17px] font-semibold text-primary-600 tracking-tight">CustoPilot</span>
-            <span className="text-[11px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-medium">
-              Support
-            </span>
-          </div>
-          <button
-            onClick={() => setSidebarOpen(false)}
-            className="lg:hidden p-1.5 rounded-lg hover:bg-primary-200 text-primary-500 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+        <div className="h-14 px-5 flex items-center justify-between border-b border-slate-800">
+          <span className="text-lg font-semibold text-white tracking-tight">CustoPilot</span>
+          <span className="text-xs font-medium bg-warning-500/20 text-warning-500 px-2 py-0.5 rounded">
+            Support
+          </span>
         </div>
 
         {/* Navigation */}
@@ -61,62 +45,63 @@ export default function SupportLayout() {
               end={item.exact}
               className={({ isActive }) =>
                 clsx(
-                  'flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-medium transition-colors',
+                  'flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors',
                   isActive
-                    ? 'bg-white text-primary-600 shadow-subtle'
-                    : 'text-primary-500 hover:bg-primary-200/60'
+                    ? 'bg-brand-600 text-white'
+                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
                 )
               }
             >
-              <item.icon className="w-[18px] h-[18px]" />
               {item.label}
             </NavLink>
           ))}
         </nav>
 
         {/* User Info */}
-        <div className="border-t border-primary-200 p-4">
+        <div className="border-t border-slate-800 p-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 bg-amber-600 rounded-full flex items-center justify-center">
-                <span className="text-[14px] font-medium text-white">
-                  {user?.full_name?.[0] || user?.email?.[0] || 'S'}
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-8 h-8 bg-warning-600 rounded-md flex items-center justify-center flex-shrink-0">
+                <span className="text-sm font-semibold text-white">
+                  {user?.full_name?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || 'S'}
                 </span>
               </div>
-              <div>
-                <p className="text-[14px] font-medium text-primary-600">{user?.full_name || 'Support'}</p>
-                <p className="text-[12px] text-primary-400 capitalize">{user?.role}</p>
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-slate-200 truncate">{user?.full_name || 'Support'}</p>
+                <p className="text-xs text-slate-500 capitalize truncate">{user?.role}</p>
               </div>
             </div>
             <button
               onClick={handleLogout}
-              className="p-2 text-primary-400 hover:text-primary-600 rounded-lg hover:bg-primary-200 transition-colors"
+              className="text-xs font-medium text-slate-500 hover:text-slate-300 transition-colors flex-shrink-0"
               title="Logout"
             >
-              <LogOut className="w-4 h-4" />
+              Exit
             </button>
           </div>
         </div>
       </aside>
 
       {/* Main Content */}
-      <div className={clsx('transition-all duration-200', sidebarOpen ? 'lg:ml-[260px]' : 'ml-0')}>
+      <div className={clsx('transition-all duration-200', sidebarOpen ? 'lg:ml-60' : 'ml-0')}>
         {/* Top Bar */}
-        <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-primary-200">
-          <div className="flex items-center justify-between h-14 px-5">
+        <header className="sticky top-0 z-40 bg-white border-b border-slate-200">
+          <div className="flex items-center justify-between h-14 px-6">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="p-2 rounded-lg hover:bg-primary-100 text-primary-500 transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-slate-100 text-slate-600 transition-colors"
             >
-              <Menu className="w-5 h-5" />
+              <svg width="16" height="14" viewBox="0 0 16 14" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M1 1h14M1 7h14M1 13h14" strokeLinecap="round" />
+              </svg>
             </button>
 
             {user?.role === 'admin' && (
               <NavLink
                 to="/admin"
-                className="text-[13px] text-primary-400 hover:text-accent-500 font-medium transition-colors"
+                className="text-sm text-slate-500 hover:text-brand-600 font-medium transition-colors"
               >
-                ← Admin Dashboard
+                Admin Dashboard
               </NavLink>
             )}
           </div>

@@ -1,12 +1,4 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import {
-  Mic,
-  MicOff,
-  VolumeX,
-  Phone,
-  PhoneOff,
-  Loader2,
-} from 'lucide-react'
 
 const VoiceState = {
   IDLE: 'idle',
@@ -210,7 +202,7 @@ export default function VoiceSupport({ onSendMessage, onClose }) {
   }
 
   return (
-    <div className="fixed inset-0 bg-primary-600 flex flex-col items-center justify-center z-50">
+    <div className="fixed inset-0 bg-slate-900 flex flex-col items-center justify-center z-50">
       {}
       <div className="absolute inset-0 overflow-hidden">
         <div className={`absolute inset-0 ${
@@ -221,10 +213,10 @@ export default function VoiceSupport({ onSendMessage, onClose }) {
               key={i}
               className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border ${
                 voiceState === VoiceState.LISTENING
-                  ? 'border-emerald-400/30'
+                  ? 'border-success-400/30'
                   : voiceState === VoiceState.SPEAKING
-                  ? 'border-accent-400/30'
-                  : 'border-primary-400/30'
+                  ? 'border-brand-400/30'
+                  : 'border-slate-600/30'
               }`}
               style={{
                 width: `${200 + i * 100}px`,
@@ -239,26 +231,24 @@ export default function VoiceSupport({ onSendMessage, onClose }) {
       {/* Main Content */}
       <div className="relative z-10 text-center">
         {/* AI Avatar */}
-        <div className={`w-28 h-28 rounded-full mx-auto mb-8 flex items-center justify-center transition-colors ${
+        <div className={`w-28 h-28 rounded-md mx-auto mb-8 flex items-center justify-center transition-colors ${
           voiceState === VoiceState.SPEAKING
-            ? 'bg-accent-500'
+            ? 'bg-brand-600'
             : voiceState === VoiceState.LISTENING
-            ? 'bg-emerald-500'
+            ? 'bg-success-600'
             : voiceState === VoiceState.PROCESSING
-            ? 'bg-amber-500'
-            : 'bg-primary-400'
+            ? 'bg-warning-500'
+            : 'bg-slate-700'
         }`}>
           {voiceState === VoiceState.PROCESSING ? (
-            <Loader2 className="w-14 h-14 text-white animate-spin" />
+            <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
           ) : (
-            <svg className="w-14 h-14 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
-            </svg>
+            <span className="text-white text-3xl font-bold">AI</span>
           )}
         </div>
 
         {/* Status Text */}
-        <h2 className="text-[24px] font-semibold text-white mb-2 tracking-tight">
+        <h2 className="text-2xl font-semibold text-white mb-2 tracking-tight">
           {!isCallActive
             ? 'Voice Support'
             : voiceState === VoiceState.LISTENING
@@ -272,20 +262,20 @@ export default function VoiceSupport({ onSendMessage, onClose }) {
         </h2>
 
         {isCallActive && (
-          <p className="text-[14px] text-primary-300 mb-4">{formatDuration(callDuration)}</p>
+          <p className="text-sm text-slate-400 mb-4">{formatDuration(callDuration)}</p>
         )}
 
         {/* Transcript */}
         {transcript && (
-          <div className="max-w-md mx-auto mb-8 p-4 bg-white/10 rounded-apple-lg backdrop-blur-sm">
-            <p className="text-[15px] text-white/90">{transcript}</p>
+          <div className="max-w-md mx-auto mb-8 p-4 bg-white/10 rounded-md backdrop-blur-sm">
+            <p className="text-sm text-white/90">{transcript}</p>
           </div>
         )}
 
         {/* Error */}
         {error && (
-          <div className="max-w-md mx-auto mb-8 p-4 bg-red-500/20 rounded-apple-lg backdrop-blur-sm">
-            <p className="text-[14px] text-red-200">{error}</p>
+          <div className="max-w-md mx-auto mb-8 p-4 bg-danger-500/20 rounded-md backdrop-blur-sm">
+            <p className="text-sm text-danger-200">{error}</p>
           </div>
         )}
 
@@ -294,9 +284,9 @@ export default function VoiceSupport({ onSendMessage, onClose }) {
           {!isCallActive ? (
             <button
               onClick={startCall}
-              className="w-16 h-16 rounded-full bg-emerald-500 hover:bg-emerald-600 flex items-center justify-center text-white transition-colors shadow-elevated"
+              className="w-16 h-16 rounded-full bg-success-600 hover:bg-success-700 flex items-center justify-center text-white transition-colors shadow-lg"
             >
-              <Phone className="w-7 h-7" />
+              <span className="text-lg font-semibold">Call</span>
             </button>
           ) : (
             <>
@@ -304,36 +294,32 @@ export default function VoiceSupport({ onSendMessage, onClose }) {
                 onClick={toggleMute}
                 className={`w-14 h-14 rounded-full flex items-center justify-center text-white transition-colors ${
                   voiceState === VoiceState.LISTENING
-                    ? 'bg-emerald-500 hover:bg-emerald-600'
+                    ? 'bg-success-600 hover:bg-success-700'
                     : 'bg-white/20 hover:bg-white/30'
                 }`}
               >
-                {voiceState === VoiceState.LISTENING ? (
-                  <Mic className="w-6 h-6" />
-                ) : (
-                  <MicOff className="w-6 h-6" />
-                )}
+                <span className="text-xs font-semibold">{voiceState === VoiceState.LISTENING ? 'Mic' : 'Mute'}</span>
               </button>
 
               <button
                 onClick={endCall}
-                className="w-16 h-16 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center text-white transition-colors shadow-elevated"
+                className="w-16 h-16 rounded-full bg-danger-500 hover:bg-danger-600 flex items-center justify-center text-white transition-colors shadow-lg"
               >
-                <PhoneOff className="w-7 h-7" />
+                <span className="text-sm font-semibold">End</span>
               </button>
 
               <button
                 onClick={() => synthesis.current?.cancel()}
                 className="w-14 h-14 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors"
               >
-                <VolumeX className="w-6 h-6" />
+                <span className="text-xs font-semibold">Stop</span>
               </button>
             </>
           )}
         </div>
 
         {!isCallActive && (
-          <p className="text-[13px] text-primary-300 mt-8">
+          <p className="text-sm text-slate-400 mt-8">
             Tap the call button to start
           </p>
         )}
@@ -343,9 +329,9 @@ export default function VoiceSupport({ onSendMessage, onClose }) {
       {onClose && !isCallActive && (
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-white/60 hover:text-white text-[20px] transition-colors"
+          className="absolute top-4 right-4 text-white/60 hover:text-white text-xl font-semibold transition-colors"
         >
-          ✕
+          ×
         </button>
       )}
     </div>

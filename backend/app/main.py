@@ -8,7 +8,7 @@ from fastapi.responses import FileResponse
 import structlog
 
 from app.core.config import settings
-from app.api import auth, organizations, knowledge, chat, support, agents, voice, chatbots
+from app.api import auth, organizations, knowledge, chat, support, agents, voice, chatbots, demo
 from app.db.session import init_db
 
 
@@ -77,6 +77,7 @@ app.include_router(chat.router, prefix="/api/chat", tags=["Chat"])
 app.include_router(support.router, prefix="/api/support", tags=["Support"])
 app.include_router(agents.router, prefix="/api/agents", tags=["Agents"])
 app.include_router(voice.router, prefix="/api/voice", tags=["Voice"])
+app.include_router(demo.router, prefix="/api/demo", tags=["Demo"])
 
 
 @app.get("/")

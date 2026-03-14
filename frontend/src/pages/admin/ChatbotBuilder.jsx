@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { chatbotsAPI, organizationsAPI, knowledgeAPI } from '../../api/client'
 import { useAuthStore } from '../../stores/authStore'
+import { Link } from 'react-router-dom'
 
 const colorPresets = [
   '#4f46e5', // Indigo
@@ -197,6 +198,21 @@ export default function ChatbotBuilder() {
         >
           Create Chatbot
         </button>
+      </div>
+
+      <div className="rounded-lg border border-dashed border-slate-300 bg-slate-50 p-4 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h2 className="text-sm font-semibold text-slate-800">Tool Integrations (Design Space)</h2>
+          <p className="text-xs text-slate-500 mt-1">
+            Reserved for future CRM/tool connectors (orders, shipping, refunds, tickets) during chatbot creation.
+          </p>
+        </div>
+        <Link
+          to="/admin/demo-lab"
+          className="inline-flex items-center px-3 py-2 text-xs font-medium rounded-md border border-slate-300 text-slate-700 hover:bg-white transition-colors"
+        >
+          Open Demo Lab
+        </Link>
       </div>
 
       {/* Create/Edit Modal */}

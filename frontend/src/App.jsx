@@ -18,6 +18,7 @@ import ChatbotBuilder from './pages/admin/ChatbotBuilder'
 import AgentPipelines from './pages/admin/AgentPipelines'
 import AgentTraces from './pages/admin/AgentTraces'
 import TestChatbot from './pages/admin/TestChatbot'
+import DemoChatbotLab from './pages/admin/DemoChatbotLab'
 
 // Support Pages
 import SupportDashboard from './pages/support/Dashboard'
@@ -70,6 +71,7 @@ function App() {
         <Route path="pipelines" element={<AgentPipelines />} />
         <Route path="traces" element={<AgentTraces />} />
         <Route path="test-chat" element={<TestChatbot />} />
+        <Route path="demo-lab" element={<DemoChatbotLab />} />
       </Route>
       
       {/* Support Routes */}

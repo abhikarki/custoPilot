@@ -2,27 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --surface-0: #ffffff;
+  --surface-1: #f4f5f7;
+  --surface-2: #eceff3;
+  --line-subtle: #d8dde6;
+  --line-strong: #c2c9d3;
+  --text-primary: #131821;
+  --text-secondary: #4f5b6d;
+  --text-muted: #7a8799;
+  --accent: #0f4fa8;
+  --accent-hover: #0c438e;
+  --danger: #c73636;
+  --focus: rgba(15, 79, 168, 0.18);
+  font-family: 'Manrope', 'Segoe UI', Tahoma, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #f8fafc;
-  color: #1e293b;
+  background: var(--surface-1);
+  color: var(--text-primary);
 }
 
-/* Professional scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -33,34 +43,14 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #bcc4cf;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #9ca8b8;
 }
 
-/* Subtle animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(-8px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.2s ease-out;
-}
-
-.animate-slide-in {
-  animation: slideIn 0.2s ease-out;
-}
-
-/* Typing indicator */
 @keyframes pulse {
   0%, 100% { opacity: 0.4; }
   50% { opacity: 1; }
@@ -73,20 +63,62 @@ body {
 .typing-dot:nth-child(2) { animation-delay: 0.15s; }
 .typing-dot:nth-child(3) { animation-delay: 0.3s; }
 
-/* Focus states */
 input:focus, textarea:focus, select:focus, button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 0 0 3px var(--focus);
 }
 
-/* Button transitions */
 button {
-  transition: all 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
-/* Selection */
 ::selection {
-  background: rgba(99, 102, 241, 0.15);
+  background: rgba(15, 79, 168, 0.14);
+}
+
+@layer base {
+  h1, h2, h3, h4 {
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  .cp-surface {
+    @apply bg-white border border-slate-200 rounded-lg;
+  }
+
+  .cp-muted {
+    color: var(--text-secondary);
+  }
+
+  .cp-heading {
+    @apply text-slate-900 font-semibold tracking-tight;
+  }
+
+  .cp-input {
+    @apply w-full px-3.5 py-2.5 border border-slate-300 rounded-md bg-white text-sm text-slate-900;
+  }
+
+  .cp-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .cp-btn-primary {
+    @apply inline-flex items-center justify-center px-4 py-2.5 rounded-md text-sm font-semibold text-white;
+    background: var(--accent);
+  }
+
+  .cp-btn-primary:hover {
+    background: var(--accent-hover);
+  }
+
+  .cp-btn-ghost {
+    @apply inline-flex items-center justify-center px-3.5 py-2.5 rounded-md text-sm font-medium border border-slate-300 bg-white text-slate-700;
+  }
+
+  .cp-btn-ghost:hover {
+    @apply bg-slate-100;
+  }
 }
 
 /* Custom utility classes */

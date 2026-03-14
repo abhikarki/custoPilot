@@ -135,4 +135,23 @@ export const voiceAPI = {
   listVoices: () => api.get('/voice/voices'),
 }
 
+export const demoAPI = {
+  createSession: (sessionId) => api.post('/demo/session', null, {
+    params: sessionId ? { session_id: sessionId } : {},
+  }),
+  getOverview: (sessionId) => api.get('/demo/overview', {
+    params: sessionId ? { session_id: sessionId } : {},
+  }),
+  getMessages: (sessionId) => api.get('/demo/messages', {
+    params: sessionId ? { session_id: sessionId } : {},
+  }),
+  getConnectorSchema: (sessionId) => api.get('/demo/connector-schema', {
+    params: sessionId ? { session_id: sessionId } : {},
+  }),
+  chat: (sessionId, message) => api.post('/demo/chat', {
+    session_id: sessionId,
+    message,
+  }),
+}
+
 export default api

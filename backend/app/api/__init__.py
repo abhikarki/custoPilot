@@ -1,7 +1,7 @@
 """
 API module initialization
 """
-from app.api import auth, organizations, knowledge, chat, support, agents, voice, chatbots
+from app.api import auth, organizations, knowledge, chat, support, agents, voice, chatbots, demo
 
 __all__ = [
     "auth",
@@ -12,4 +12,5 @@ __all__ = [
     "agents",
     "voice",
     "chatbots",
+    "demo",
 ]

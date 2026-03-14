@@ -6,6 +6,11 @@ The **Chatbot Builder** allows teams to create custom chatbots by selecting spec
 
 Post-production, companies can use the **support console** to monitor conversations, view usage analytics, and receive human escalation requests via MCP tools when AI agents in the **customer support pipeline** determine they are not confident enough to respond.
 
+### System Architecture
+
+<img width="3807" height="2105" alt="custoPilot-architecture" src="https://github.com/user-attachments/assets/2d8d4284-6b92-4eda-9a94-eeebd72ba17b" />
+
+
 The platform includes a dedicated **Demo Chatbot Lab** (`/admin/demo-lab`) to showcase what tool-enabled support bots can do end-to-end with realistic in-house mock data.
 
 It includes:
@@ -16,8 +21,3 @@ It includes:
 - Session-scoped mutable demo state so users can test actions and see records update
 - A preview connector contract for future external integrations (orders/shipping/refunds/customer tools)
 
-
-
-### System Architecture
-
-<img width="3807" height="2105" alt="custoPilot-architecture" src="https://github.com/user-attachments/assets/2d8d4284-6b92-4eda-9a94-eeebd72ba17b" />

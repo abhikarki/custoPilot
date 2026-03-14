@@ -1,6 +1,30 @@
+import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { organizationsAPI, agentsAPI, chatbotsAPI, knowledgeAPI } from '../../api/client'
 import { useAuthStore } from '../../stores/authStore'
+
+const quickActions = [
+  {
+    title: 'Departments',
+    description: 'Define the support areas and content boundaries for your team.',
+    to: '/admin/departments',
+  },
+  {
+    title: 'Knowledge Base',
+    description: 'Upload documents and keep the retrieval layer current.',
+    to: '/admin/knowledge',
+  },
+  {
+    title: 'Chatbots',
+    description: 'Configure chatbot behavior and deployment settings.',
+    to: '/admin/chatbots',
+  },
+  {
+    title: 'Demo Chatbot Lab',
+    description: 'Open the live CRM-style demo and test tool-driven support flows.',
+    to: '/admin/demo-lab',
+  },
+]
 
 function StatCard({ label, value, sublabel, variant = 'default' }) {
   const variants = {
@@ -139,6 +163,28 @@ export default function AdminDashboard() {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-lg p-6 border border-slate-200">
+        <div className="flex items-center justify-between gap-4 mb-4">
+          <div>
+            <h2 className="text-base font-semibold text-slate-900">Workspace Shortcuts</h2>
+            <p className="text-sm text-slate-500 mt-1">Direct links to the main admin tools, including the demo chatbot lab.</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+          {quickActions.map((action) => (
+            <Link
+              key={action.to}
+              to={action.to}
+              className="rounded-lg border border-slate-200 p-4 bg-slate-50 hover:bg-slate-100 hover:border-slate-300 transition-colors"
+            >
+              <h3 className="text-sm font-semibold text-slate-900">{action.title}</h3>
+              <p className="text-xs text-slate-500 mt-2 leading-5">{action.description}</p>
+            </Link>
+          ))}
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ const navItems = [
   { path: '/admin/pipelines', label: 'Pipelines' },
   { path: '/admin/traces', label: 'Traces' },
   { path: '/admin/test-chat', label: 'Test Chat' },
-  { path: '/admin/demo-lab', label: 'Demo Lab' },
+  { path: '/admin/demo-lab', label: 'Demo Chatbot Lab' },
 ]
 
 export default function AdminLayout() {

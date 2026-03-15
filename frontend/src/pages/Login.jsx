@@ -33,25 +33,27 @@ export default function Login() {
             <p className="mt-3 text-sm text-slate-600 leading-relaxed">
               AI support operations platform for chatbot management, knowledge routing, and escalations.
             </p>
-
-            <div className="mt-8 cp-surface p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.08em] text-slate-500">Demo Access</p>
-              <p className="text-sm text-slate-700 mt-2">Use the sample admin credentials:</p>
-              <p className="text-xs font-mono mt-2 text-slate-800">admin@custopilot.com</p>
-              <p className="text-xs font-mono text-slate-800">admin123</p>
-              <button
-                type="button"
-                onClick={fillDemoCredentials}
-                className="cp-btn-ghost mt-4"
-              >
-                Autofill Credentials
-              </button>
-            </div>
           </section>
 
           <section className="p-8 sm:p-10">
             <h2 className="text-xl font-semibold text-slate-900">Sign in</h2>
             <p className="text-sm text-slate-500 mt-1">Use your workspace account to continue.</p>
+
+            <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">Demo Access</p>
+                  <p className="mt-1 text-xs text-slate-600">Admin: <span className="font-mono text-slate-800">admin@custopilot.com</span> / <span className="font-mono text-slate-800">admin123</span></p>
+                </div>
+                <button
+                  type="button"
+                  onClick={fillDemoCredentials}
+                  className="px-2.5 py-1.5 rounded-md border border-slate-300 bg-white text-xs font-medium text-slate-700 hover:bg-slate-100 transition-colors"
+                >
+                  Autofill
+                </button>
+              </div>
+            </div>
 
             {error && (
               <div className="mt-5 p-3 bg-danger-50 border border-danger-100 rounded-md text-xs text-danger-700">

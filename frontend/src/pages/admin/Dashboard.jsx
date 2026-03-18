@@ -27,15 +27,8 @@ const quickActions = [
 ]
 
 function StatCard({ label, value, sublabel, variant = 'default' }) {
-  const variants = {
-    default: 'border-slate-200',
-    success: 'border-l-4 border-l-success-500 border-t-slate-200 border-r-slate-200 border-b-slate-200',
-    warning: 'border-l-4 border-l-warning-500 border-t-slate-200 border-r-slate-200 border-b-slate-200',
-    brand: 'border-l-4 border-l-brand-500 border-t-slate-200 border-r-slate-200 border-b-slate-200',
-  }
-
   return (
-    <div className={`bg-white rounded-lg p-5 border ${variants[variant]}`}>
+    <div className="bg-white rounded-lg p-5 border border-slate-200">
       <div className="flex flex-col">
         <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">{label}</span>
         <span className="text-3xl font-semibold text-slate-900 mt-2">{value}</span>
@@ -98,25 +91,21 @@ export default function AdminDashboard() {
           label="Departments"
           value={deptsData?.data?.length || 0}
           sublabel="Knowledge categories"
-          variant="default"
         />
         <StatCard
           label="Chatbots"
           value={chatbotsData?.data?.length || 0}
           sublabel="Active deployments"
-          variant="success"
         />
         <StatCard
           label="Documents"
           value={docsData?.data?.length || 0}
           sublabel="In knowledge base"
-          variant="warning"
         />
         <StatCard
           label="Pipelines"
           value={pipelinesData?.data?.filter((p) => p.is_active).length || 0}
           sublabel="Currently active"
-          variant="brand"
         />
       </div>
 
@@ -133,7 +122,7 @@ export default function AdminDashboard() {
               { step: '4', title: 'Deploy', desc: 'Embed chatbot on your website' },
             ].map((item) => (
               <div key={item.step} className="flex items-center gap-4 p-3 bg-slate-50 rounded-md">
-                <div className="w-6 h-6 bg-slate-900 rounded text-xs font-semibold text-white flex items-center justify-center">
+                <div className="w-6 h-6 bg-slate-700 rounded text-xs font-semibold text-white flex items-center justify-center">
                   {item.step}
                 </div>
                 <div>
@@ -154,12 +143,12 @@ export default function AdminDashboard() {
               { name: 'Support Pipeline', status: 'Operational' },
               { name: 'Vector Store', status: 'Connected' },
             ].map((item) => (
-              <div key={item.name} className="flex items-center justify-between p-3 bg-success-50 rounded-md">
+              <div key={item.name} className="flex items-center justify-between p-3 bg-slate-50 rounded-md\">
                 <div className="flex items-center gap-3">
-                  <div className="w-1.5 h-1.5 bg-success-500 rounded-full" />
+                  <span className="text-slate-600 mt-0.5">•</span>
                   <span className="text-sm text-slate-700">{item.name}</span>
                 </div>
-                <span className="text-xs text-success-700 font-medium">{item.status}</span>
+                <span className="text-xs text-slate-600 font-medium">{item.status}</span>
               </div>
             ))}
           </div>

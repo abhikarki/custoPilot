@@ -51,7 +51,7 @@ export default function Conversations() {
         <div className="bg-white rounded-lg border border-slate-200">
           {loadingList ? (
             <div className="flex items-center justify-center h-32">
-              <div className="w-5 h-5 border-2 border-brand-600 border-t-transparent rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-slate-400 border-t-slate-900 rounded-full animate-spin" />
             </div>
           ) : conversationsData?.data?.length === 0 ? (
             <div className="p-8 text-center">
@@ -72,7 +72,7 @@ export default function Conversations() {
                       </p>
                       <p className="text-xs text-slate-500 mt-0.5">
                         {item.type === 'escalation' && (
-                          <span className="text-danger-600">Escalated · </span>
+                          <span className="text-slate-600">Escalated · </span>
                         )}
                         {item.status || 'Active'}
                       </p>
@@ -80,10 +80,10 @@ export default function Conversations() {
                     {item.confidence_score !== undefined && (
                       <span className={`text-xs font-medium ${
                         item.confidence_score < 0.5 
-                          ? 'text-danger-600' 
-                          : item.confidence_score < 0.7 
-                            ? 'text-warning-600' 
-                            : 'text-success-600'
+                          ? 'text-slate-600' 
+                          : queueItem?.confidence_score < 0.5
+                            ? 'text-slate-600' 
+                            : 'text-slate-700'
                       }`}>
                         {(item.confidence_score * 100).toFixed(0)}%
                       </span>
@@ -126,7 +126,7 @@ export default function Conversations() {
 
           <div className="flex items-center gap-2">
             {conversation?.escalations?.length > 0 && (
-              <span className="px-2 py-1 bg-danger-50 text-danger-600 rounded text-xs font-medium">
+              <span className="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs font-medium">
                 Escalated
               </span>
             )}
@@ -138,7 +138,7 @@ export default function Conversations() {
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50">
         {loadingConversation ? (
           <div className="flex items-center justify-center h-full">
-            <div className="w-5 h-5 border-2 border-brand-600 border-t-transparent rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-slate-400 border-t-slate-900 rounded-full animate-spin\" />
           </div>
         ) : messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">
@@ -153,7 +153,7 @@ export default function Conversations() {
               }`}
             >
               {message.role !== 'user' && (
-                <div className="w-7 h-7 rounded-md bg-brand-100 flex items-center justify-center flex-shrink-0">
+                <div className="w-7 h-7 rounded-md bg-slate-200 flex items-center justify-center flex-shrink-0">
                   <span className="text-xs font-semibold text-brand-600">AI</span>
                 </div>
               )}
@@ -196,7 +196,7 @@ export default function Conversations() {
       <div className="bg-white border-t border-slate-200 p-4">
         {isOverriding ? (
           <div className="space-y-3">
-            <p className="text-xs font-medium text-warning-600">Override Mode</p>
+            <p className="text-xs font-medium text-slate-600">Override Mode</p>
             <div className="flex gap-3">
               <textarea
                 value={overrideMessage}

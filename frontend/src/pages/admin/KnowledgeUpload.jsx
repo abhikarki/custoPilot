@@ -6,16 +6,16 @@ import { format } from 'date-fns'
 
 const statusStyles = {
   pending: { bg: 'bg-slate-100', text: 'text-slate-600' },
-  processing: { bg: 'bg-brand-50', text: 'text-brand-600' },
-  completed: { bg: 'bg-success-50', text: 'text-success-700' },
-  failed: { bg: 'bg-danger-50', text: 'text-danger-600' },
+  processing: { bg: 'bg-slate-100', text: 'text-slate-600' },
+  completed: { bg: 'bg-slate-100', text: 'text-slate-700' },
+  failed: { bg: 'bg-slate-100', text: 'text-slate-600' },
 }
 
 const typeStyles = {
-  faq: 'bg-violet-50 text-violet-700',
-  policy: 'bg-blue-50 text-blue-700',
-  troubleshooting: 'bg-warning-50 text-warning-700',
-  sales: 'bg-success-50 text-success-700',
+  faq: 'bg-slate-100 text-slate-700',
+  policy: 'bg-slate-100 text-slate-700',
+  troubleshooting: 'bg-slate-100 text-slate-700',
+  sales: 'bg-slate-100 text-slate-700',
   general: 'bg-slate-100 text-slate-600',
 }
 
@@ -81,8 +81,8 @@ export default function KnowledgeUpload() {
 
   if (!organizationId) {
     return (
-      <div className="bg-warning-50 border border-warning-100 rounded-lg p-6 text-center">
-        <p className="text-sm text-warning-700">No organization found. Please log out and register again.</p>
+      <div className="bg-slate-100 border border-slate-200 rounded-lg p-6 text-center">
+        <p className="text-sm text-slate-600">No organization found. Please log out and register again.</p>
       </div>
     )
   }
@@ -103,7 +103,7 @@ export default function KnowledgeUpload() {
           <select
             value={selectedDept}
             onChange={(e) => setSelectedDept(e.target.value)}
-            className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-sm text-slate-900 focus:bg-white focus:border-brand-500 transition-colors"
+            className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-sm text-slate-900 focus:bg-white focus:border-slate-400 transition-colors"
           >
             <option value="">All Departments</option>
             {deptsData?.data?.map((dept) => (
@@ -116,7 +116,7 @@ export default function KnowledgeUpload() {
 
         <div
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-slate-200 rounded-lg p-8 text-center cursor-pointer hover:border-brand-500 hover:bg-brand-50/50 transition-colors"
+          className="border-2 border-dashed border-slate-200 rounded-lg p-8 text-center cursor-pointer hover:border-slate-400 hover:bg-slate-50/50 transition-colors"
         >
           <input
             ref={fileInputRef}
@@ -127,7 +127,7 @@ export default function KnowledgeUpload() {
           />
           {uploadMutation.isPending ? (
             <div className="flex flex-col items-center gap-2">
-              <div className="w-8 h-8 border-2 border-brand-600 border-t-transparent rounded-full animate-spin" />
+              <div className="w-8 h-8 border-2 border-slate-400 border-t-slate-900 rounded-full animate-spin" />
               <p className="text-sm text-slate-600">Uploading...</p>
             </div>
           ) : (
@@ -146,7 +146,7 @@ export default function KnowledgeUpload() {
 
           {isLoading ? (
             <div className="flex items-center justify-center h-32">
-              <div className="w-6 h-6 border-2 border-brand-600 border-t-transparent rounded-full animate-spin" />
+              <div className="w-6 h-6 border-2 border-slate-400 border-t-slate-900 rounded-full animate-spin" />
             </div>
           ) : docsData?.data?.length === 0 ? (
             <div className="bg-white rounded-lg p-8 text-center border border-slate-200">
@@ -188,7 +188,7 @@ export default function KnowledgeUpload() {
                             e.stopPropagation()
                             reprocessMutation.mutate(doc.id)
                           }}
-                          className="text-xs text-brand-600 hover:text-brand-700 font-medium"
+                          className="text-xs text-slate-700 hover:text-slate-900 font-medium"
                         >
                           Retry
                         </button>
@@ -200,7 +200,7 @@ export default function KnowledgeUpload() {
                             deleteMutation.mutate(doc.id)
                           }
                         }}
-                        className="text-xs text-slate-400 hover:text-danger-600"
+                        className="text-xs text-slate-400 hover:text-slate-600"
                       >
                         Delete
                       </button>

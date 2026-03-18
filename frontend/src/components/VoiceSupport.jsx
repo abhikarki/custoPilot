@@ -213,9 +213,9 @@ export default function VoiceSupport({ onSendMessage, onClose }) {
               key={i}
               className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border ${
                 voiceState === VoiceState.LISTENING
-                  ? 'border-success-400/30'
+                  ? 'border-slate-400/30'
                   : voiceState === VoiceState.SPEAKING
-                  ? 'border-brand-400/30'
+                  ? 'border-slate-400/30'
                   : 'border-slate-600/30'
               }`}
               style={{
@@ -233,11 +233,11 @@ export default function VoiceSupport({ onSendMessage, onClose }) {
         {/* AI Avatar */}
         <div className={`w-28 h-28 rounded-md mx-auto mb-8 flex items-center justify-center transition-colors ${
           voiceState === VoiceState.SPEAKING
-            ? 'bg-brand-600'
+            ? 'bg-blue-600'
             : voiceState === VoiceState.LISTENING
-            ? 'bg-success-600'
+            ? 'bg-slate-700'
             : voiceState === VoiceState.PROCESSING
-            ? 'bg-warning-500'
+            ? 'bg-slate-600'
             : 'bg-slate-700'
         }`}>
           {voiceState === VoiceState.PROCESSING ? (
@@ -274,8 +274,8 @@ export default function VoiceSupport({ onSendMessage, onClose }) {
 
         {/* Error */}
         {error && (
-          <div className="max-w-md mx-auto mb-8 p-4 bg-danger-500/20 rounded-md backdrop-blur-sm">
-            <p className="text-sm text-danger-200">{error}</p>
+          <div className="max-w-md mx-auto mb-8 p-4 bg-slate-700/20 rounded-md backdrop-blur-sm">
+            <p className="text-sm text-slate-300">{error}</p>
           </div>
         )}
 
@@ -284,7 +284,7 @@ export default function VoiceSupport({ onSendMessage, onClose }) {
           {!isCallActive ? (
             <button
               onClick={startCall}
-              className="w-16 h-16 rounded-full bg-success-600 hover:bg-success-700 flex items-center justify-center text-white transition-colors shadow-lg"
+              className="w-16 h-16 rounded-full bg-slate-700 hover:bg-slate-800 flex items-center justify-center text-white transition-colors shadow-lg"
             >
               <span className="text-lg font-semibold">Call</span>
             </button>
@@ -294,7 +294,7 @@ export default function VoiceSupport({ onSendMessage, onClose }) {
                 onClick={toggleMute}
                 className={`w-14 h-14 rounded-full flex items-center justify-center text-white transition-colors ${
                   voiceState === VoiceState.LISTENING
-                    ? 'bg-success-600 hover:bg-success-700'
+                    ? 'bg-slate-700 hover:bg-slate-800'
                     : 'bg-white/20 hover:bg-white/30'
                 }`}
               >
@@ -303,7 +303,7 @@ export default function VoiceSupport({ onSendMessage, onClose }) {
 
               <button
                 onClick={endCall}
-                className="w-16 h-16 rounded-full bg-danger-500 hover:bg-danger-600 flex items-center justify-center text-white transition-colors shadow-lg"
+                className="w-16 h-16 rounded-full bg-slate-600 hover:bg-slate-700 flex items-center justify-center text-white transition-colors shadow-lg"
               >
                 <span className="text-sm font-semibold">End</span>
               </button>

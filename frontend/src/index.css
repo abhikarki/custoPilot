@@ -6,17 +6,17 @@
 
 :root {
   --surface-0: #ffffff;
-  --surface-1: #f4f5f7;
-  --surface-2: #eceff3;
-  --line-subtle: #d8dde6;
-  --line-strong: #c2c9d3;
-  --text-primary: #131821;
-  --text-secondary: #4f5b6d;
-  --text-muted: #7a8799;
-  --accent: #0f4fa8;
-  --accent-hover: #0c438e;
-  --danger: #c73636;
-  --focus: rgba(15, 79, 168, 0.18);
+  --surface-1: #f8f9fb;
+  --surface-2: #f0f2f5;
+  --line-subtle: #e0e5ed;
+  --line-strong: #cbd2dc;
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --danger: #dc2626;
+  --focus: rgba(37, 99, 235, 0.12);
   font-family: 'Manrope', 'Segoe UI', Tahoma, sans-serif;
   line-height: 1.5;
   font-weight: 400;

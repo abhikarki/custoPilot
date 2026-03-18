@@ -83,7 +83,7 @@ export default function AdminLayout() {
             </div>
             <button
               onClick={handleLogout}
-              className="text-xs font-medium text-slate-500 hover:text-danger-600 transition-colors flex-shrink-0"
+              className="text-xs font-medium text-slate-500 hover:text-slate-700 transition-colors flex-shrink-0"
               title="Logout"
             >
               Exit

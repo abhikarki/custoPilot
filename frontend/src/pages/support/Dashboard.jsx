@@ -28,32 +28,24 @@ export default function SupportDashboard() {
     {
       name: 'Queue Size',
       value: queueStats?.total || 0,
-      variant: 'default',
+      link: null,
     },
     {
       name: 'Pending Escalations',
       value: escalationsData?.data?.length || 0,
-      variant: 'danger',
       link: '/support/escalations',
     },
     {
       name: 'Low Confidence',
       value: queueStats?.lowConfidence || 0,
-      variant: 'warning',
+      link: null,
     },
     {
       name: 'Waiting',
       value: queueStats?.waiting || 0,
-      variant: 'brand',
+      link: null,
     },
   ]
-
-  const variants = {
-    default: 'border-slate-200',
-    danger: 'border-l-4 border-l-danger-500 border-t-slate-200 border-r-slate-200 border-b-slate-200',
-    warning: 'border-l-4 border-l-warning-500 border-t-slate-200 border-r-slate-200 border-b-slate-200',
-    brand: 'border-l-4 border-l-brand-500 border-t-slate-200 border-r-slate-200 border-b-slate-200',
-  }
 
   return (
     <div className="space-y-8">
@@ -68,14 +60,14 @@ export default function SupportDashboard() {
         {stats.map((stat) => (
           <div
             key={stat.name}
-            className={`bg-white rounded-lg p-5 border ${variants[stat.variant]}`}
+            className="bg-white rounded-lg p-5 border border-slate-200"
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">{stat.name}</span>
               {stat.link && (
                 <Link
                   to={stat.link}
-                  className="text-xs text-brand-600 hover:text-brand-700 font-medium"
+                  className="text-xs text-slate-700 hover:text-slate-900 font-medium\"
                 >
                   View
                 </Link>
@@ -83,7 +75,7 @@ export default function SupportDashboard() {
             </div>
             <div className="mt-3">
               {loadingQueue || loadingEscalations ? (
-                <div className="w-5 h-5 border-2 border-brand-600 border-t-transparent rounded-full animate-spin" />
+                <div className=\"w-5 h-5 border-2 border-slate-400 border-t-slate-900 rounded-full animate-spin\" />
               ) : (
                 <p className="text-3xl font-semibold text-slate-900">{stat.value}</p>
               )}
@@ -127,7 +119,7 @@ export default function SupportDashboard() {
                   </div>
                   <Link
                     to={`/support/conversations/${escalation.conversation_id}`}
-                    className="px-3 py-1.5 bg-brand-50 text-brand-600 rounded-md text-xs font-medium hover:bg-brand-100 transition-colors"
+                    className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-md text-xs font-medium hover:bg-slate-200 transition-colors"
                   >
                     Handle
                   </Link>
@@ -164,15 +156,15 @@ export default function SupportDashboard() {
           <h3 className="text-base font-semibold text-slate-900 mb-4">Tips</h3>
           <ul className="space-y-3 text-xs text-slate-600">
             <li className="flex items-start gap-2">
-              <span className="text-success-600 mt-0.5">•</span>
+              <span className="text-slate-600 mt-0.5">•</span>
               <span>Escalations with low confidence may need manual review</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-success-600 mt-0.5">•</span>
+              <span className="text-slate-600 mt-0.5">•</span>
               <span>Override AI responses when domain expertise is needed</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-success-600 mt-0.5">•</span>
+              <span className="text-slate-600 mt-0.5">•</span>
               <span>Resolved escalations help improve the AI over time</span>
             </li>
           </ul>

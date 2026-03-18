@@ -32,7 +32,7 @@ export default function SupportLayout() {
             <span className="text-base font-bold tracking-tight text-slate-900">CustoPilot</span>
             <p className="text-[11px] text-slate-500">Support Workspace</p>
           </div>
-          <span className="text-[11px] font-semibold bg-warning-100 text-warning-700 px-2 py-1 rounded border border-warning-200">
+          <span className="text-[11px] font-semibold bg-slate-100 text-slate-700 px-2 py-1 rounded border border-slate-200">
             Support
           </span>
         </div>
@@ -72,7 +72,7 @@ export default function SupportLayout() {
             </div>
             <button
               onClick={handleLogout}
-              className="text-xs font-medium text-slate-500 hover:text-danger-600 transition-colors flex-shrink-0"
+              className="text-xs font-medium text-slate-500 hover:text-slate-700 transition-colors flex-shrink-0"
               title="Logout"
             >
               Exit

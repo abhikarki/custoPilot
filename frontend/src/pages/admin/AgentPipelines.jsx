@@ -13,14 +13,14 @@ import { useAuthStore } from '../../stores/authStore'
 
 function AgentNode({ data }) {
   return (
-    <div className="px-4 py-3 bg-white rounded-md border-2 border-brand-500 shadow-sm min-w-[200px]">
+    <div className="px-4 py-3 bg-white rounded-md border-2 border-slate-300 shadow-sm min-w-[200px]">
       <div className="flex items-center gap-2 mb-1">
-        <div className="w-2 h-2 bg-success-500 rounded-full" />
+        <div className="w-2 h-2 bg-slate-600 rounded-full" />
         <span className="text-sm font-medium text-slate-900">{data.label}</span>
       </div>
       <p className="text-xs text-slate-500">{data.type}</p>
       {data.confidence_threshold && (
-        <p className="text-xs text-warning-600 mt-1">
+        <p className="text-xs text-slate-600 mt-1">
           Threshold: {data.confidence_threshold}
         </p>
       )}
@@ -79,8 +79,8 @@ export default function AgentPipelines() {
 
   if (!organizationId) {
     return (
-      <div className="bg-warning-50 border border-warning-200 rounded-md p-6 text-center">
-        <p className="text-sm text-warning-700">No organization found. Please log in again.</p>
+      <div className="bg-slate-100 border border-slate-200 rounded-md p-6 text-center">
+        <p className="text-sm text-slate-600">No organization found. Please log in again.</p>
       </div>
     )
   }
@@ -93,7 +93,7 @@ export default function AgentPipelines() {
           <h1 className="text-2xl font-semibold text-slate-900">Agent Pipelines</h1>
           <p className="text-sm text-slate-500 mt-1">View and configure agent orchestration pipelines</p>
           {/* <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg"> */}
-            <p className="text-xs text-brand-600 mt-2">
+            <p className="text-xs text-slate-600 mt-2">
               <span className="font-medium">Note:</span> Pipeline configuration editing will be available in a future update. 
               Currently showing default settings.
             </p>
@@ -103,7 +103,7 @@ export default function AgentPipelines() {
           <select
             value={selectedPipeline}
             onChange={(e) => setSelectedPipeline(e.target.value)}
-            className="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-md text-sm text-slate-900 focus:bg-white focus:border-brand-500 transition-colors"
+            className="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-md text-sm text-slate-900 focus:bg-white focus:border-slate-400 transition-colors"
           >
             <option value="knowledge_ingestion">Knowledge Ingestion</option>
             <option value="customer_support">Customer Support</option>
@@ -112,7 +112,7 @@ export default function AgentPipelines() {
             <button
               onClick={() => initMutation.mutate()}
               disabled={initMutation.isPending}
-              className="px-4 py-2.5 bg-brand-600 text-white text-sm font-medium rounded-md hover:bg-brand-700 disabled:opacity-50 transition-colors"
+              className="px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 disabled:opacity-50 transition-colors"
             >
               {initMutation.isPending ? 'Initializing...' : 'Initialize Pipelines'}
             </button>
@@ -149,7 +149,7 @@ export default function AgentPipelines() {
                 className="flex items-center justify-between p-3.5 bg-slate-50 rounded-md"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-brand-100 rounded-md flex items-center justify-center text-sm text-brand-600 font-semibold">
+                  <div className="w-8 h-8 bg-slate-200 rounded-md flex items-center justify-center text-sm text-slate-700 font-semibold">
                     {i + 1}
                   </div>
                   <div>
@@ -159,11 +159,11 @@ export default function AgentPipelines() {
                 </div>
                 <div className="flex items-center gap-2">
                   {node.data.confidence_threshold && (
-                    <span className="text-xs bg-warning-100 text-warning-700 px-2 py-1 rounded">
+                    <span className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">
                       {node.data.confidence_threshold}
                     </span>
                   )}
-                  <span className="text-xs font-medium text-success-600">Active</span>
+                  <span className="text-xs font-medium text-slate-700">Active</span>
                 </div>
               </div>
             ))}
@@ -204,9 +204,9 @@ export default function AgentPipelines() {
                 <p className="text-xs font-medium text-slate-500">Escalation Threshold</p>
                 <p className="text-base font-semibold text-slate-900">0.7</p>
               </div>
-              <div className="p-4 bg-warning-50 rounded-md border border-warning-200">
-                <p className="text-xs font-medium text-warning-700">Human Escalation</p>
-                <p className="text-xs text-warning-600">
+              <div className="p-4 bg-slate-100 rounded-md border border-slate-200">
+                <p className="text-xs font-medium text-slate-700">Human Escalation</p>
+                <p className="text-xs text-slate-600">
                   Responses below confidence threshold are automatically routed to support team
                 </p>
               </div>

@@ -138,7 +138,7 @@ export default function DemoChatbotLab() {
                 className={clsx('flex gap-3', msg.role === 'user' ? 'justify-end' : 'justify-start')}
               >
                 {msg.role === 'assistant' && (
-                  <div className="w-8 h-8 rounded-md bg-emerald-100 text-emerald-700 text-xs font-semibold flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-md bg-slate-200 text-slate-700 text-xs font-semibold flex items-center justify-center">
                     AI
                   </div>
                 )}
@@ -168,7 +168,7 @@ export default function DemoChatbotLab() {
             ))}
             {sendMutation.isPending && (
               <div className="flex gap-3 justify-start">
-                <div className="w-8 h-8 rounded-md bg-emerald-100 text-emerald-700 text-xs font-semibold flex items-center justify-center">
+                <div className="w-8 h-8 rounded-md bg-slate-200 text-slate-700 text-xs font-semibold flex items-center justify-center">
                   AI
                 </div>
                 <div className="bg-slate-100 rounded-lg px-4 py-3">
@@ -186,12 +186,12 @@ export default function DemoChatbotLab() {
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 placeholder="Ask about shipping, cancellation, refund..."
-                className="flex-1 px-3.5 py-2.5 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-400"
+                className="flex-1 px-3.5 py-2.5 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400"
               />
               <button
                 type="submit"
                 disabled={!input.trim() || sendMutation.isPending || !sessionId}
-                className="px-4 py-2.5 rounded-md bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 transition-colors"
+                className="px-4 py-2.5 rounded-md bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
               >
                 Send
               </button>

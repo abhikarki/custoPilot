@@ -29,9 +29,9 @@ export default function Register() {
           New workspace provisioning is currently controlled. Use the demo login credentials to explore the product.
         </p>
 
-        <div className="mt-6 p-4 rounded-lg border border-warning-200 bg-warning-50">
-          <p className="text-sm font-semibold text-warning-700">Invite Only</p>
-          <p className="text-xs text-warning-700 mt-1.5">
+        <div className="mt-6 p-4 rounded-lg border border-slate-200 bg-slate-100">
+          <p className="text-sm font-semibold text-slate-700">Invite Only</p>
+          <p className="text-xs text-slate-600 mt-1.5">
             If you need production access, contact the platform administrator.
           </p>
         </div>

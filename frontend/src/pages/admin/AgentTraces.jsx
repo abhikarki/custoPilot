@@ -5,9 +5,9 @@ import { useAuthStore } from '../../stores/authStore'
 import { format } from 'date-fns'
 
 const statusColors = {
-  running: 'text-brand-600',
-  completed: 'text-success-600',
-  failed: 'text-danger-600',
+  running: 'text-slate-600',
+  completed: 'text-slate-700',
+  failed: 'text-slate-600',
 }
 
 const statusLabels = {
@@ -35,8 +35,8 @@ export default function AgentTraces() {
 
   if (!organizationId) {
     return (
-      <div className="bg-warning-50 border border-warning-200 rounded-md p-6 text-center">
-        <p className="text-sm text-warning-700">No organization found. Please log in again.</p>
+      <div className="bg-slate-100 border border-slate-200 rounded-md p-6 text-center">
+        <p className="text-sm text-slate-600">No organization found. Please log in again.</p>
       </div>
     )
   }
@@ -57,7 +57,7 @@ export default function AgentTraces() {
         
         {loadingPipelines ? (
           <div className="flex items-center justify-center h-20">
-            <div className="w-5 h-5 border-2 border-brand-600 border-t-transparent rounded-full animate-spin" />
+            <div className="w-5 h-5 border-2 border-slate-400 border-t-slate-900 rounded-full animate-spin\" />
           </div>
         ) : pipelinesData?.data?.length === 0 ? (
           <p className="text-sm text-slate-500">No pipelines configured yet. Initialize them from the Pipelines page.</p>
@@ -69,8 +69,8 @@ export default function AgentTraces() {
                 onClick={() => setSelectedPipeline(pipeline.id)}
                 className={`px-4 py-2.5 rounded-md text-sm font-medium border transition-colors ${
                   selectedPipeline === pipeline.id
-                    ? 'bg-brand-50 border-brand-500 text-brand-600'
-                    : 'bg-white border-slate-200 text-slate-700 hover:border-brand-300'
+                    ? 'bg-slate-100 border-slate-400 text-slate-700'
+                    : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
                 }`}
               >
                 {pipeline.name}
@@ -89,7 +89,7 @@ export default function AgentTraces() {
 
           {loadingRuns ? (
             <div className="flex items-center justify-center h-32">
-              <div className="w-5 h-5 border-2 border-brand-600 border-t-transparent rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-slate-400 border-t-slate-900 rounded-full animate-spin" />
             </div>
           ) : runsData?.data?.length === 0 ? (
             <div className="p-8 text-center">
@@ -141,7 +141,7 @@ export default function AgentTraces() {
                             href={run.langsmith_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm text-brand-600 hover:text-brand-700 transition-colors"
+                            className="text-sm text-slate-700 hover:text-slate-900 transition-colors"
                           >
                             View in LangSmith →
                           </a>

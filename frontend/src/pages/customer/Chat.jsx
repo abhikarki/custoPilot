@@ -199,16 +199,16 @@ export default function CustomerChat() {
               </span>
               
               {isLowConfidence && (
-                <span className="text-xs text-warning-600">
+                <span className="text-xs text-slate-600">
                   May need verification
                 </span>
               )}
 
               <div className="flex items-center gap-1 ml-auto">
-                <button className="p-1 hover:bg-slate-100 rounded text-slate-300 hover:text-success-500 transition-colors text-xs">
+                <button className="p-1 hover:bg-slate-100 rounded text-slate-400 hover:text-slate-600 transition-colors text-xs">
                   👍
                 </button>
-                <button className="p-1 hover:bg-slate-100 rounded text-slate-300 hover:text-danger-500 transition-colors text-xs">
+                <button className="p-1 hover:bg-slate-100 rounded text-slate-400 hover:text-slate-700 transition-colors text-xs">
                   👎
                 </button>
               </div>
@@ -250,8 +250,8 @@ export default function CustomerChat() {
             </div>
             <div>
               <h1 className="text-sm font-semibold text-slate-900">Support Assistant</h1>
-              <p className="text-xs text-success-600 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 bg-success-500 rounded-full"></span>
+              <p className="text-xs text-slate-600 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 bg-slate-600 rounded-full"></span>
                 Online
               </p>
             </div>
@@ -273,7 +273,7 @@ export default function CustomerChat() {
             {isSpeaking && (
               <button
                 onClick={stopSpeaking}
-                className="px-3 py-1.5 rounded-md bg-danger-50 text-danger-600 text-xs font-medium border border-danger-200 transition-colors"
+                className="px-3 py-1.5 rounded-md bg-slate-100 text-slate-700 text-xs font-medium border border-slate-200 transition-colors"
                 title="Stop speaking"
               >
                 Stop
@@ -290,7 +290,7 @@ export default function CustomerChat() {
 
             <button
               onClick={() => setShowVoiceSupport(true)}
-              className="px-3 py-1.5 rounded-md bg-success-50 text-success-600 text-xs font-medium border border-success-200 hover:bg-success-100 transition-colors"
+              className="px-3 py-1.5 rounded-md bg-slate-100 text-slate-700 text-xs font-medium border border-slate-200 hover:bg-slate-200 transition-colors"
               title="Voice call"
             >
               Voice Call

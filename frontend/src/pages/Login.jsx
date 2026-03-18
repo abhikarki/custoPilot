@@ -37,22 +37,22 @@ export default function Login() {
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           {/* Welcome Heading */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">Welcome</h1>
-            <p className="text-sm text-slate-500">Sign in to your account to continue</p>
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-slate-900 mb-3">Welcome</h1>
+            <p className="text-base text-slate-600">Sign in to your account to continue</p>
           </div>
 
           {/* Demo Credentials Banner */}
-          <div className="mb-6 rounded-lg bg-slate-100 border border-slate-200 px-4 py-3">
+          <div className="mb-8 rounded-lg bg-slate-100 border border-slate-200 px-5 py-4">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Demo Credentials</p>
-                <p className="mt-1 text-sm text-slate-600">admin@custopilot.com / admin123</p>
+                <p className="text-sm font-semibold text-slate-600 uppercase tracking-wide">Demo Credentials</p>
+                <p className="mt-1.5 text-base text-slate-600">admin@custopilot.com / admin123</p>
               </div>
               <button
                 type="button"
                 onClick={fillDemoCredentials}
-                className="px-3 py-1.5 rounded border border-slate-300 bg-white text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors whitespace-nowrap"
+                className="px-4 py-2 rounded border border-slate-300 bg-white text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors whitespace-nowrap"
               >
                 Autofill
               </button>
@@ -61,16 +61,16 @@ export default function Login() {
 
           {/* Error Message */}
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
               {error}
             </div>
           )}
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-7">
             {/* Email Field */}
             <div>
-              <label className="block text-sm font-medium text-slate-900 mb-2">
+              <label className="block text-base font-medium text-slate-900 mb-2.5">
                 Your email address
               </label>
               <input
@@ -79,13 +79,13 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="you@company.com"
-                className="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-sm text-slate-900 placeholder-slate-400 transition-colors focus:border-slate-400"
+                className="w-full px-5 py-3.5 border border-slate-300 rounded-xl bg-white text-base text-slate-900 placeholder-slate-400 transition-colors focus:border-slate-400"
               />
             </div>
 
             {/* Password Field */}
             <div>
-              <label className="block text-sm font-medium text-slate-900 mb-2">
+              <label className="block text-base font-medium text-slate-900 mb-2.5">
                 Your password
               </label>
               <div className="relative">
@@ -95,12 +95,12 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="Enter your password"
-                  className="w-full px-4 py-3 pr-11 border border-slate-300 rounded-xl bg-white text-sm text-slate-900 placeholder-slate-400 transition-colors focus:border-slate-400"
+                  className="w-full px-5 py-3.5 pr-12 border border-slate-300 rounded-xl bg-white text-base text-slate-900 placeholder-slate-400 transition-colors focus:border-slate-400"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 transition-colors"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? (
@@ -120,10 +120,10 @@ export default function Login() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full mt-7 px-6 py-3.5 bg-emerald-400 hover:bg-emerald-500 text-slate-900 font-semibold rounded-full transition-colors flex items-center justify-center gap-2 disabled:opacity-70"
+              className="w-full mt-8 px-6 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-70"
             >
               {isLoading && (
-                <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                <svg className="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                 </svg>
@@ -133,7 +133,7 @@ export default function Login() {
           </form>
 
           {/* Footer Link */}
-          <div className="mt-6 text-center text-sm text-slate-600">
+          <div className="mt-8 text-center text-base text-slate-600">
             Need access?{' '}
             <Link to="/register" className="font-semibold text-slate-900 hover:text-slate-700 transition-colors">
               Request an invite

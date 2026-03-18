@@ -75,7 +75,7 @@ export default function SupportDashboard() {
             </div>
             <div className="mt-3">
               {loadingQueue || loadingEscalations ? (
-                <div className=\"w-5 h-5 border-2 border-slate-400 border-t-slate-900 rounded-full animate-spin\" />
+                <div className="w-5 h-5 border-2 border-slate-400 border-t-slate-900 rounded-full animate-spin" />
               ) : (
                 <p className="text-3xl font-semibold text-slate-900">{stat.value}</p>
               )}

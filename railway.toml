@@ -9,10 +9,10 @@ healthcheckTimeout = 300
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 5
 
-# Environment variables to set :
-# - DATABASE_URL
-# - OPENAI_API_KEY
-# - SECRET_KEY 
-# - BASE_URL 
+# Environment variables to set in Railway dashboard:
+# - DATABASE_URL=sqlite+aiosqlite:///backend/data/custopilot.db
+# - OPENAI_API_KEY (your API key)
+# - SECRET_KEY (generate a secure key)
+# - BASE_URL (your Railway app URL)
 # - LANGCHAIN_API_KEY (optional)
 # - LANGCHAIN_TRACING_V2=true (optional)

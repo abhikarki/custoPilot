@@ -18,10 +18,6 @@ backend/.env.*
 
 !.env.example
 
-*.db
-*.sqlite
-*.sqlite3
-
 *.log
 logs/
 

@@ -5,6 +5,8 @@ from typing import Optional
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent.parent
 
+# Database path - convert to forward slashes for SQLite URL
+DB_PATH = (BACKEND_DIR / 'data' / 'custopilot.db').as_posix()
 
 class Settings(BaseSettings):
     
@@ -14,7 +16,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 24 hours
     BASE_URL: str = "http://localhost:8080"
     
-    DATABASE_URL: str = f"sqlite+aiosqlite:///{BACKEND_DIR / 'data' / 'custopilot.db'}"
+    DATABASE_URL: str = f"sqlite+aiosqlite:///{DB_PATH}"
     
     OPENAI_API_KEY: str = ""
     OPENAI_MODEL: str = "gpt-4o-mini"
@@ -24,18 +26,18 @@ class Settings(BaseSettings):
     LANGCHAIN_API_KEY: str = ""
     LANGCHAIN_PROJECT: str = "custopilot"
     
-    CHROMA_PERSIST_DIRECTORY: str = str(BACKEND_DIR / "data" / "chroma")
+    CHROMA_PERSIST_DIRECTORY: str = str((BACKEND_DIR / "data" / "chroma").as_posix())
     CHROMA_HOST: Optional[str] = None  # For remote ChromaDB
     CHROMA_PORT: Optional[int] = None
     
-    UPLOAD_DIRECTORY: str = str(BACKEND_DIR / "data" / "uploads")
+    UPLOAD_DIRECTORY: str = str((BACKEND_DIR / "data" / "uploads").as_posix())
     MAX_UPLOAD_SIZE: int = 50 * 1024 * 1024  # 50MB
     
     CONFIDENCE_THRESHOLD: float = 0.7
     MAX_RETRIES: int = 3
     
     model_config = {
-        "env_file": ".env",
+        "env_file": str((BACKEND_DIR / ".." / ".env").resolve()),
         "case_sensitive": True,
         "extra": "ignore"  
     }

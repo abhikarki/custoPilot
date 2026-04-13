@@ -36,7 +36,7 @@ RUN mkdir -p /app/data/chroma /app/data/uploads /app/static
 
 ENV PORT=8080
 ENV DEBUG=false
-ENV DATABASE_URL=sqlite+aiosqlite:///./data/custopilot.db
+ENV DATABASE_URL=sqlite+aiosqlite:////app/data/custopilot.db
 ENV CHROMA_PERSIST_DIRECTORY=/app/data/chroma
 ENV UPLOAD_DIRECTORY=/app/data/uploads
 ENV LANGCHAIN_TRACING_V2=false
